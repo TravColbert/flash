@@ -1,0 +1,18 @@
+extends ../../../views/layout
+
+block variables
+    - var selected = 'Users'
+    - var title = 'Users'
+
+
+block content
+    h1= "This is a list of users"
+
+    if users == null || !users.length
+        p "There are no users created yet"
+
+    .users
+        ul
+            each user in users 
+                li 
+                    a(href="/user/" + user.id, title=user.name)= user.name

@@ -1,0 +1,17 @@
+extends ../../../views/layout
+
+block variables
+  - var selected = "Pet"
+  - var title = "Edit " + pet.name
+
+block messages 
+  if hasMessages 
+    .message
+      p MESSAGE: #{messages.length} 
+
+block content
+  h1 This is the EDIT page for #{pet.name}
+  form(action="/pet/" + pet.id + "?_method=put" method="post")
+    label Name:
+      input(type="text", name="pet[name]" value=pet.name)
+    input(type="submit" value="Update")

@@ -1,0 +1,18 @@
+extends ../../../views/layout
+
+block variables
+    - var selected = 'Pets'
+    - var title = 'Pets'
+
+
+block content
+    h1= "This is a list of pets"
+
+    if pets == null || !pets.length
+        p "There are no pets created yet"
+
+    .pets
+        ul
+            each pet in pets 
+                li 
+                    a(href="/pets/" + pet.id, title=pet.name)= pet.name
