@@ -1,8 +1,7 @@
-const Sequelize = require("sequelize");
+const Sequelize = require('sequelize')
 
-module.exports = function (sequelize) {
-  return sequelize.define("cards", {
-    front: Sequelize.TEXT,
-    back: Sequelize.TEXT,
-  });
-};
+module.exports = function (db) {
+  return db.define('tag', {
+    name: Sequelize.STRING
+  })
+}
