@@ -1,7 +1,7 @@
-const Sequelize = require('sequelize')
-
-module.exports = function (db) {
-  return db.define('tag', {
-    name: Sequelize.STRING
+module.exports = function (orm, db, tableName) {
+  console.log(` building ${tableName} model`)
+  return db.define(tableName, {
+    front: orm.TEXT,
+    back: orm.TEXT
   })
 }

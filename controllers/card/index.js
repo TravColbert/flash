@@ -1,19 +1,19 @@
-"use strict";
+'use strict'
 
-function controller(db) {
+module.exports = function (db) {
   return {
     before: (req, res, next) => {
-      const card = db.find(req.params.card_id);
-      if (!card) return next("route");
-      req.card = card;
-      next();
+      const card = db.find(req.params.card_id)
+      if (!card) return next('route')
+      req.card = card
+      next()
     },
     list: (req, res, next) => {
-      console.log("HELLO? From card");
-      res.render("card");
+      console.log('HELLO? From card')
+      res.render('card')
     },
     edit: (req, res, next) => {
-      res.render("edit", { pet: req.pet });
+      res.render('edit', { pet: req.pet })
     },
     // delete: (req, res, next) => {
     //   const searchRecord = db.findIndex((pet) => pet.id === req.pet.id);
@@ -22,15 +22,13 @@ function controller(db) {
     //   res.redirect("/pets");
     // },
     show: (req, res, next) => {
-      res.render("show", { pet: req.pet });
+      res.render('show', { pet: req.pet })
     },
     update: (req, res, next) => {
       // var body = req.body;
-      req.pet.name = req.body.pet.name;
-      res.message("Information updated!");
-      res.redirect("/pets/" + req.pet.id);
-    },
-  };
+      req.pet.name = req.body.pet.name
+      res.message('Information updated!')
+      res.redirect('/pets/' + req.pet.id)
+    }
+  }
 }
-
-module.exports = controller;
