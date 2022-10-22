@@ -78,15 +78,17 @@ const db = require('./lib/boot-models')({
 //   dialect: 'sqlite',
 //   storage: 'db/database.sqlite'
 // }
-
 db.sync()
   .then(() => {
     db.models.tag.create({ name: 'test' })
   })
-  .then(() => {
-    // load controllers after model has been built
-    require('./lib/boot-controllers')(app, { db, verbose: !module.parent })
-  })
+
+app.use((req, res, next) => {
+  console.log('=> %s %s %s', req.method, req.url, req.params)
+  next()
+})
+
+require('./lib/boot-controllers')(app, { db, verbose: !module.parent })
 
 app.use(function (err, req, res, next) {
   // log it
@@ -105,4 +107,5 @@ app.use(function (req, res, next) {
 if (!module.parent) {
   app.listen(3000)
   console.log('Express started on port 3000')
+  // console.log(app._router.stack)
 }

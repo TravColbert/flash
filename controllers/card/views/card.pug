@@ -10,3 +10,7 @@ block messages
 
 block content
   h1 This is the CARD page
+  .cards
+    each card in cards
+      .card
+        a(href="/cards/" + card.id, title=card.front)= card.front

@@ -1,0 +1,15 @@
+extends ../../../views/layout
+
+block variables
+  - var selected = "Tag"
+  - var title = "Tags"
+
+block content 
+  h2 Create tag
+  form.new.tag(action="/tags/", method="POST")
+    .label 
+      label(for="tag-name")= "Tag name"
+    .input.name 
+      input#tag-name(type="text", name="name", vaue="", autofocus)
+    .input.submit
+    input(type="submit", value="Submit")

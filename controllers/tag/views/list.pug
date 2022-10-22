@@ -1,0 +1,16 @@
+extends ../../../views/layout
+
+block variables
+  - var selected = "Tag"
+  - var title = "Tags"
+
+block content
+  h2 List tags (#{tags.length} #{(tags.length > 1) ? 'tags' : 'tag'})
+  .tags.list
+    each tag in tags
+      .tag.item
+        .tag-name #{tag.name}
+          form(id="tag-delete-#{tag.id}", action="/tags/" + tag.id + "?_method=delete", method="POST")
+            input(type="submit", value="Delete") 
+  .new
+    a(href="/tags/new", title="new tag")= "Create new tag"
