@@ -4,16 +4,16 @@ module.exports = function (db) {
   const model = db.models.tag
 
   return {
-    before: (req, res, next) => {
-      console.log('executing before()...')
-      next()
-    },
+    // before: (req, res, next) => {
+    //   console.log('executing before()...')
+    //   next()
+    // },
     create: (req, res, next) => {
       model.create(req.body)
-        .then(tag => {
+        .then(model => {
           req.session.messages.push({
             type: 'success',
-            text: `Tag '${tag.name}' created`
+            text: `Tag '${model.name}' created`
           })
         })
         .catch(() => {
@@ -25,15 +25,6 @@ module.exports = function (db) {
         .finally(() => {
           res.redirect('/tags')
         })
-    },
-    list: (req, res, next) => {
-      model.findAll({ order: [['name', 'ASC']] })
-        .then(tags => {
-          res.render('list', { tags })
-        })
-    },
-    new: (req, res, next) => {
-      res.render('new')
     },
     delete: (req, res, next) => {
       model.findByPk(req.params.tag_id)
@@ -55,6 +46,15 @@ module.exports = function (db) {
         .finally(() => {
           res.redirect('/tags')
         })
+    },
+    list: (req, res, next) => {
+      model.findAll({ order: [['name', 'ASC']] })
+        .then(tags => {
+          res.render('list', { tags })
+        })
+    },
+    new: (req, res, next) => {
+      res.render('new')
     }
   }
 }

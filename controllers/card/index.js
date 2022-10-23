@@ -4,23 +4,57 @@ module.exports = function (db) {
   const model = db.models.card
 
   return {
-    before: (req, res, next) => {
-      const card = model.findByPk(req.params.card_id)
-      if (!card) return next('route')
-      req.card = card
-      next()
+    // before: (req, res, next) => {
+    //   console.log('executing before()...')
+    //   next()
+    // },
+    create: (req, res, next) => {
+      model.create(req.body)
+        .then(model => {
+          req.session.messages.push({
+            type: 'success',
+            text: `Card '${model.name}' created`
+          })
+        })
+        .catch(() => {
+          req.session.messages.push({
+            type: 'fail',
+            text: 'Failed to create card'
+          })
+        })
+        .finally(() => {
+          res.redirect('/cards')
+        })
     },
-    list: (req, res, next) => {
-      const cards = model.findAll()
-      console.log(`CARD LIST: ${cards.length}`)
-      res.render('card', { cards })
+    delete: (req, res, next) => {
+      model.findByPk(req.params.card_id)
+        .then(card => {
+          return card.destroy()
+        })
+        .then(() => {
+          req.session.messages.push({
+            type: 'success',
+            text: 'Card deleted'
+          })
+        })
+        .catch(() => {
+          req.session.messages.push({
+            type: 'fail',
+            text: 'Failed to delete card'
+          })
+        })
+        .finally(() => {
+          res.redirect('/cards')
+        })
     },
     edit: (req, res, next) => {
       res.render('edit', { card: req.card })
     },
-    delete: (req, res, next) => {
-      model.findByPk(req.params.card_id).destroy()
-      res.redirect('/cards')
+    list: (req, res, next) => {
+      model.findAll({ order: [['front', 'ASC']] })
+        .then(cards => {
+          res.render('list', { cards })
+        })
     },
     show: (req, res, next) => {
       res.render('show', { card: req.card })
