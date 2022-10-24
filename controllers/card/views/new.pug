@@ -1,0 +1,19 @@
+extends ../../../views/layout
+
+block variables
+  - var selected = "Card"
+  - var title = "Cards"
+
+block content 
+  h2 Create card
+  form.new.card(action="/cards/", method="POST")
+    .label 
+      label(for="card-front")= "Card front"
+    .input.front 
+      input#card-front(type="text", name="front", vaue="", autofocus)
+    .label 
+      label(for="card-back")= "Card back"
+    .input.back 
+      textarea#card-back(name="back")
+    .input.submit
+    input(type="submit", value="Submit")

@@ -10,10 +10,10 @@ module.exports = function (db) {
     // },
     create: (req, res, next) => {
       model.create(req.body)
-        .then(model => {
+        .then(card => {
           req.session.messages.push({
             type: 'success',
-            text: `Card '${model.name}' created`
+            text: `Card '${card.front}' created`
           })
         })
         .catch(() => {
@@ -48,7 +48,19 @@ module.exports = function (db) {
         })
     },
     edit: (req, res, next) => {
-      res.render('edit', { card: req.card })
+      console.log(`Fetching card: ${req.params.card_id}`)
+      model.findByPk(req.params.card_id)
+        .then(card => {
+          console.log(card)
+          res.render('edit', { card })
+        })
+        .catch(() => {
+          req.session.messages.push({
+            type: 'fail',
+            text: 'Can\'t find that card'
+          })
+          res.redirect('/cards')
+        })
     },
     list: (req, res, next) => {
       model.findAll({ order: [['front', 'ASC']] })
@@ -56,13 +68,41 @@ module.exports = function (db) {
           res.render('list', { cards })
         })
     },
+    new: (req, res, next) => {
+      res.render('new')
+    },
     show: (req, res, next) => {
-      res.render('show', { card: req.card })
+      model.findByPk(req.params.card_id)
+        .then(card => {
+          res.render('show', { card })
+        })
+        .catch(() => {
+          req.session.messages.push({
+            type: 'fail',
+            text: 'Can\'t find that card'
+          })
+          res.redirect('/cards')
+        })
     },
     update: (req, res, next) => {
-      model.find(req.body.card.id).update(req.body.card)
-      res.message('Card updated')
-      res.redirect('/cards/' + req.card.id)
+      console.log(req.body.card)
+      model.findByPk(req.body.card.id)
+        .then(card => {
+          card.update(req.body.card)
+          req.session.messages.push({
+            type: 'success',
+            text: 'Card updated'
+          })
+        })
+        .catch(() => {
+          req.session.messages.push({
+            type: 'fail',
+            text: 'Failed to update card'
+          })
+        })
+        .finally(() => {
+          res.redirect(`/cards/${req.body.card.id}`)
+        })
     }
   }
 }

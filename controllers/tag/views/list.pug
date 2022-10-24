@@ -5,7 +5,7 @@ block variables
   - var title = "Tags"
 
 block content
-  h2 List tags (#{tags.length} #{(tags.length > 1) ? 'tags' : 'tag'})
+  h2 List tags (#{tags.length} #{(tags.length !== 1) ? 'tags' : 'tag'})
   .tags.list
     each tag in tags
       .tag.item

@@ -1,0 +1,15 @@
+extends ../../../views/layout
+
+block variables
+  - var selected = "Card"
+  - var title = "Cards"
+
+block content
+  h2 Show card
+  .card.item
+    .field.front #{card.front}
+    .field.back #{card.back}
+  .edit
+    a(href=`/cards/${card.id}/edit`, title="edit card")= "Edit card"
+  .delete
+    a(href=`/cards/${card.id}?_method=delete`, title="delete card")= "Delete card"

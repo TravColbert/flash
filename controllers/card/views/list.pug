@@ -1,0 +1,17 @@
+extends ../../../views/layout
+
+block variables
+  - var selected = "Card"
+  - var title = "Cards"
+
+block content
+  h2 List cards (#{cards.length} #{(cards.length !== 1) ? 'cards' : 'card'})
+  .cards.list
+    each card in cards
+      .card.item
+        .field.front 
+          a(href=`/cards/${card.id}` title=card.front) #{card.front}
+          form(id="card-delete-#{card.id}", action="/cards/" + card.id + "?_method=delete", method="POST")
+            input(type="submit", value="Delete") 
+  .new
+    a(href="/cards/new", title="new card")= "Create a new card"
