@@ -68,20 +68,20 @@ app.use(function (req, res, next) {
 })
 
 // load models
-const db = require('./lib/boot-models')({
-  verbose: true,
-  dbConfig: 'sqlite::memory'
-})
-
 // Optional DB config:
 // {
 //   dialect: 'sqlite',
 //   storage: 'db/database.sqlite'
 // }
-db.sync()
-  .then(() => {
-    db.models.tag.create({ name: 'test' })
-  })
+const db = require('./lib/boot-models')({
+  verbose: true,
+  dbConfig: 'sqlite::memory'
+})
+
+// db.sync()
+//   .then(() => {
+//     db.models.tag.create({ name: 'test' })
+//   })
 
 app.use((req, res, next) => {
   console.log('=> %s %s %s', req.method, req.url, req.params)

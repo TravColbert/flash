@@ -1,6 +1,13 @@
-module.exports = function (orm, db, tableName) {
-  console.log(` building ${tableName} model`)
-  return db.define(tableName, {
-    name: orm.STRING
-  })
+module.exports = function (orm) {
+  return {
+    definition: {
+      name: orm.STRING
+    },
+    association: async (db) => {
+      db.models.tag.belongsToMany(db.models.card, { through: 'CardTag' })
+    },
+    seed: {
+      name: 'test'
+    }
+  }
 }
