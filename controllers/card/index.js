@@ -10,6 +10,11 @@ module.exports = function (db) {
     // },
     create: (req, res, next) => {
       model.create(req.body)
+        .then(async (card) => {
+          console.log(req.body)
+          const tag = await db.models.tags.findByPk(req.body.tags)
+          return await card.setTag(tag)
+        })
         .then(card => {
           req.session.messages.push({
             type: 'success',
@@ -68,8 +73,9 @@ module.exports = function (db) {
           res.render('list', { cards })
         })
     },
-    new: (req, res, next) => {
-      res.render('new')
+    new: async (req, res, next) => {
+      const tags = await db.models.tag.findAll()
+      res.render('new', { tags })
     },
     show: (req, res, next) => {
       model.findByPk(req.params.card_id)

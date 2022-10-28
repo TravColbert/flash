@@ -8,12 +8,19 @@ block content
   h2 Create card
   form.new.card(action="/cards/", method="POST")
     .label 
-      label(for="card-front")= "Card front"
+      label(for="card-front") Card front
     .input.front 
       input#card-front(type="text", name="front", vaue="", autofocus)
     .label 
-      label(for="card-back")= "Card back"
+      label(for="card-back") Card back
     .input.back 
       textarea#card-back(name="back")
+    .label
+      label(for="tag-select") Tag(s):
+    .input.tags 
+      select#tag-select(name="tags")
+        option(value="") -- choose a tag --
+        each tag in tags 
+          option(value=tag.id)= tag.name
     .input.submit
     input(type="submit", value="Submit")
