@@ -16,11 +16,16 @@ block content
     .input.back 
       textarea#card-back(name="back")
     .label
-      label(for="tag-select") Tag(s):
-    .input.tags 
-      select#tag-select(name="tags")
-        option(value="") -- choose a tag --
-        each tag in tags 
-          option(value=tag.id)= tag.name
+      label Tag(s):
+    .input.tags
+      legend Choose tags
+      each tag in tags
+        .tag
+          input(type="checkbox", id="tag_#{tag.id}", name="tags", value=tag.id)
+          label(for="tag_#{tag.id}")= tag.name
+      //- select#tag-select(name="tags")
+      //-   option(value="") -- choose a tag --
+      //-   each tag in tags 
+      //-     option(value=tag.id)= tag.name
     .input.submit
     input(type="submit", value="Submit")

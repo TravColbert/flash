@@ -1,5 +1,7 @@
 'use strict'
 
+const { Op } = require("sequelize")
+
 module.exports = function (db) {
   const model = db.models.card
 
@@ -11,9 +13,11 @@ module.exports = function (db) {
     create: (req, res, next) => {
       model.create(req.body)
         .then(async (card) => {
-          console.log(req.body)
-          const tag = await db.models.tags.findByPk(req.body.tags)
-          return await card.setTag(tag)
+          const tag = await db.models.tag.findAll({
+            where: req.body.tags
+          })
+          console.log(tag)
+          return await card.addTag(tag)
         })
         .then(card => {
           req.session.messages.push({
@@ -21,7 +25,8 @@ module.exports = function (db) {
             text: `Card '${card.front}' created`
           })
         })
-        .catch(() => {
+        .catch((err) => {
+          console.log(err)
           req.session.messages.push({
             type: 'fail',
             text: 'Failed to create card'
@@ -53,8 +58,7 @@ module.exports = function (db) {
         })
     },
     edit: (req, res, next) => {
-      console.log(`Fetching card: ${req.params.card_id}`)
-      model.findByPk(req.params.card_id)
+      model.findByPk(req.params.card_id, { include: db.models.tag })
         .then(card => {
           console.log(card)
           res.render('edit', { card })
@@ -78,11 +82,12 @@ module.exports = function (db) {
       res.render('new', { tags })
     },
     show: (req, res, next) => {
-      model.findByPk(req.params.card_id)
-        .then(card => {
+      model.findByPk(req.params.card_id, { include: db.models.tag })
+        .then(async (card) => {
           res.render('show', { card })
         })
-        .catch(() => {
+        .catch((err) => {
+          console.log(err)
           req.session.messages.push({
             type: 'fail',
             text: 'Can\'t find that card'

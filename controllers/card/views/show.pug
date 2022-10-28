@@ -9,6 +9,9 @@ block content
   .card.item
     .field.front #{card.front}
     .field.back #{card.back}
+    .field.tags
+      each tag in card.tags
+        .tag #{tag.name}
   .edit
     a(href=`/cards/${card.id}/edit`, title="edit card")= "Edit card"
   .delete

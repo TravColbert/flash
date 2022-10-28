@@ -17,5 +17,12 @@ block content
       label(for="card-back")= "Card back"
     .input.back 
       textarea#card-back(name="card[back]")= card.back
+    .label
+      label(for="tag-select") Tag(s):
+    .input.tags 
+      select#tag-select(name="tags")
+        option(value="") -- choose a tag --
+        each tag in tags 
+          option(value=tag.id)= tag.name
     .input.submit
     input(type="submit", value="Submit")
