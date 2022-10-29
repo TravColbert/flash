@@ -21,7 +21,7 @@ block content
       legend Choose tags
       each tag in tags
         .tag
-          input(type="checkbox", id=`tag_${tag.id}`, name="card[tagId]", value=tag.id)
+          input(type="checkbox", id=`tag_${tag.id}`, name="card[tags]", value=tag.id)
           label(for=`tag_${tag.id}`)= tag.name
     .input.submit
     input(type="submit", value="Submit")

@@ -13,7 +13,9 @@ module.exports = function (db) {
     create: (req, res, next) => {
       model.create(req.body.card)
         .then(async (card) => {
-          return await card.addTag(req.body.card.tags)
+          const tags = req.body.card.tags !== undefined ? req.body.card.tags : null
+          await card.setTags(tags)
+          return card
         })
         .then(card => {
           req.session.messages.push({
@@ -34,8 +36,8 @@ module.exports = function (db) {
     },
     delete: (req, res, next) => {
       model.findByPk(req.params.card_id)
-        .then(card => {
-          return card.destroy()
+        .then(async card => {
+          await card.destroy()
         })
         .then(() => {
           req.session.messages.push({
@@ -79,7 +81,7 @@ module.exports = function (db) {
     },
     show: (req, res, next) => {
       model.findByPk(req.params.card_id, { include: db.models.tag })
-        .then(async (card) => {
+        .then(card => {
           res.render('show', { card })
         })
         .catch((err) => {
@@ -94,10 +96,9 @@ module.exports = function (db) {
     update: (req, res, next) => {
       model.findByPk(req.body.card.id)
         .then(async (card) => {
-          console.log(card)
           await card.update(req.body.card)
-          // await card.addTag(req.body.card.tags)
-          console.log(card)
+          const tags = req.body.card.tags !== undefined ? req.body.card.tags : null
+          await card.setTags(tags)
           req.session.messages.push({
             type: 'success',
             text: 'Card updated'
