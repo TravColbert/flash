@@ -9,12 +9,8 @@ module.exports = function (orm) {
     },
     seed: [
       {
-        front: 'Ps 83:18',
-        back: 'This is a test'
-      },
-      {
-        front: 'Test',
-        back: 'This is another test'
+        front: 'Test Card 1',
+        back: 'This the FIRST test'
       }
     ]
   }

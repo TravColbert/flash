@@ -18,11 +18,14 @@ block content
     .input.back 
       textarea#card-back(name="card[back]")= card.back
     .label
-      label(for="tag-select") Tag(s):
-    .input.tags 
-      select#tag-select(name="tags")
-        option(value="") -- choose a tag --
-        each tag in tags 
-          option(value=tag.id)= tag.name
+      label Tag(s):
+    .input.tags
+      legend Choose tags
+      - const cardTagIds = card.tags.map(tag => tag.id)
+      each tag in tags
+        .tag
+          - const checked = cardTagIds.includes(tag.id) ? true : false
+          input(type="checkbox", id=`tag_${tag.id}`, name="card[tagId]", value=tag.id, checked=checked)
+          label(for=`tag_${tag.id}`)= tag.name
     .input.submit
     input(type="submit", value="Submit")

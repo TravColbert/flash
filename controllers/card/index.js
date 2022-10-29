@@ -1,23 +1,19 @@
 'use strict'
 
-const { Op } = require("sequelize")
+const { Op } = require('sequelize')
 
 module.exports = function (db) {
   const model = db.models.card
 
   return {
-    // before: (req, res, next) => {
-    //   console.log('executing before()...')
-    //   next()
-    // },
+    before: (req, res, next) => {
+      console.log(req.body)
+      next()
+    },
     create: (req, res, next) => {
-      model.create(req.body)
+      model.create(req.body.card)
         .then(async (card) => {
-          const tag = await db.models.tag.findAll({
-            where: req.body.tags
-          })
-          console.log(tag)
-          return await card.addTag(tag)
+          return await card.addTag(req.body.card.tags)
         })
         .then(card => {
           req.session.messages.push({
@@ -59,9 +55,9 @@ module.exports = function (db) {
     },
     edit: (req, res, next) => {
       model.findByPk(req.params.card_id, { include: db.models.tag })
-        .then(card => {
-          console.log(card)
-          res.render('edit', { card })
+        .then(async (card) => {
+          const tags = await db.models.tag.findAll()
+          res.render('edit', { card, tags })
         })
         .catch(() => {
           req.session.messages.push({
@@ -96,16 +92,19 @@ module.exports = function (db) {
         })
     },
     update: (req, res, next) => {
-      console.log(req.body.card)
       model.findByPk(req.body.card.id)
-        .then(card => {
-          card.update(req.body.card)
+        .then(async (card) => {
+          console.log(card)
+          await card.update(req.body.card)
+          // await card.addTag(req.body.card.tags)
+          console.log(card)
           req.session.messages.push({
             type: 'success',
             text: 'Card updated'
           })
         })
-        .catch(() => {
+        .catch((err) => {
+          console.log(err)
           req.session.messages.push({
             type: 'fail',
             text: 'Failed to update card'
