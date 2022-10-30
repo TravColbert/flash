@@ -1,7 +1,5 @@
 'use strict'
 
-const { Op } = require('sequelize')
-
 module.exports = function (db) {
   const model = db.models.card
 

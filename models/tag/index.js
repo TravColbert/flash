@@ -5,6 +5,7 @@ module.exports = function (orm) {
     },
     association: async (db) => {
       db.models.tag.belongsToMany(db.models.card, { through: 'CardTag' })
+      db.models.tag.hasMany(db.models.quiz, { through: 'QuizTag' })
     },
     seed: {
       name: 'test'
