@@ -5,7 +5,7 @@ module.exports = function (orm) {
       length: orm.INTEGER
     },
     association: async (db) => {
-      await db.models.quiz.belongsTo(db.models.tag)
+      await db.models.unicorn.belongsTo(db.models.tag)
     },
     // seed: {
     //   sequence: '[1,2,3,4,5]',

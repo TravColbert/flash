@@ -1,0 +1,17 @@
+extends ../../../views/layout
+
+block variables
+  - var selected = "Unicorn"
+  - var title = "Unicorns"
+
+block content
+  h2 List unicorns (#{unicorns.length} #{(unicorns.length !== 1) ? 'unicorns' : 'unicorn'})
+  .unicorns.list
+    each unicorn in unicorns
+      .unicorn.item
+        .field.tag 
+          a(href=`/unicorns/${unicorn.id}` title=unicorn.id) #{unicorn.tags[0].name}
+          form(id="unicorn-delete-#{unicorn.id}", action="/unicorns/" + unicorn.id + "?_method=delete", method="POST")
+            input(type="submit", value="Delete") 
+  .new
+    a(href="/unicorns/new", title="new unicorn")= "Create a new unicorn"

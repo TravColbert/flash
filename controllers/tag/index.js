@@ -1,15 +1,13 @@
 'use strict'
 
 module.exports = function (db) {
-  const model = db.models.tag
-
   return {
     // before: (req, res, next) => {
     //   console.log('executing before()...')
     //   next()
     // },
     create: (req, res, next) => {
-      model.create(req.body)
+      db.models.tag.create(req.body)
         .then(model => {
           req.session.messages.push({
             type: 'success',
@@ -27,7 +25,7 @@ module.exports = function (db) {
         })
     },
     delete: (req, res, next) => {
-      model.findByPk(req.params.tag_id)
+      db.models.tag.findByPk(req.params.tag_id)
         .then(tag => {
           return tag.destroy()
         })
@@ -48,7 +46,8 @@ module.exports = function (db) {
         })
     },
     list: (req, res, next) => {
-      model.findAll({ order: [['name', 'ASC']] })
+      // model.findAll({ order: [['name', 'ASC']] })
+      db.models.tag.findAll()
         .then(tags => {
           res.render('list', { tags })
         })

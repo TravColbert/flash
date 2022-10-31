@@ -78,11 +78,6 @@ const db = require('./lib/boot-models')({
   dbConfig: 'sqlite::memory'
 })
 
-// db.sync()
-//   .then(() => {
-//     db.models.tag.create({ name: 'test' })
-//   })
-
 app.use((req, res, next) => {
   console.log('=> %s %s %s', req.method, req.url, req.params)
   next()

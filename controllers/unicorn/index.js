@@ -3,11 +3,11 @@
 module.exports = (db) => {
   return {
     list: (req, res, next) => {
-      db.models.quiz.findAll({
+      db.models.unicorn.findAll({
         include: db.models.tag
       })
-        .then(quizzes => {
-          res.render('list', { quizzes })
+        .then(unicorns => {
+          res.render('list', { unicorns })
         })
     },
     new: async (req, res, next) => {

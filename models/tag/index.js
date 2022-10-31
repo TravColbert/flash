@@ -4,11 +4,12 @@ module.exports = function (orm) {
       name: orm.STRING
     },
     association: async (db) => {
-      db.models.tag.belongsToMany(db.models.card, { through: 'CardTag' })
-      db.models.tag.hasMany(db.models.quiz, { through: 'QuizTag' })
+      await db.models.tag.belongsToMany(db.models.card, { through: 'CardTag' })
+      await db.models.tag.hasMany(db.models.quiz)
+      await db.models.tag.hasMany(db.models.unicorn)
     },
     seed: {
-      name: 'test'
+      name: 'Animals'
     }
   }
 }
