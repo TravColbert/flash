@@ -5,8 +5,12 @@ module.exports = function (orm) {
     },
     association: async (db) => {
       await db.models.tag.belongsToMany(db.models.card, { through: 'CardTag' })
-      await db.models.tag.hasMany(db.models.quiz)
-      await db.models.tag.hasMany(db.models.unicorn)
+      // await db.models.tag.hasMany(db.models.quiz, {
+      //   foreignKey: 'tagId'
+      // })
+      await db.models.tag.hasMany(db.models.unicorn, {
+        foreignKey: 'tagId'
+      })
     },
     seed: {
       name: 'Animals'

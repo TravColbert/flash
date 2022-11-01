@@ -1,8 +1,15 @@
-module.exports = function (orm) {
+module.exports = function (orm, db) {
   return {
     definition: {
       sequence: orm.TEXT,
-      length: orm.INTEGER
+      length: orm.INTEGER,
+      tagId: {
+        type: orm.INTEGER,
+        references: {
+          model: db.models.tag,
+          key: 'id'
+        }
+      }
     },
     association: async (db) => {
       await db.models.unicorn.belongsTo(db.models.tag)

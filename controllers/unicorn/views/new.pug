@@ -20,7 +20,7 @@ block content
     .input.tags
       legend Choose tag
       select#tag-select(name="unicorn[tag]")
-      each tag in tags
-        option(value=tag.id)= tag.name
+        each tag in tags
+          option(value=tag.id)= tag.name
     .input.submit
     input(type="submit", value="Submit")

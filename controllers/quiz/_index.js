@@ -4,7 +4,9 @@ module.exports = (db) => {
   return {
     list: (req, res, next) => {
       db.models.quiz.findAll({
-        include: db.models.tag
+        include: [{
+          model: db.models.tag
+        }]
       })
         .then(quizzes => {
           res.render('list', { quizzes })
