@@ -1,5 +1,6 @@
 module.exports = function (orm) {
   return {
+    name: 'card',
     definition: {
       front: orm.TEXT,
       back: orm.TEXT

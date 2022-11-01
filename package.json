@@ -20,6 +20,7 @@
     "morgan": "^1.10.0",
     "pug": "^3.0.2",
     "sequelize": "^6.25.2",
+    "shuffle-array": "^1.0.1",
     "sqlite3": "^5.1.2"
   },
   "devDependencies": {

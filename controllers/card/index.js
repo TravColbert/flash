@@ -1,15 +1,13 @@
 'use strict'
 
 module.exports = function (db) {
-  const model = db.models.card
-
   return {
     before: (req, res, next) => {
       console.log(req.body)
       next()
     },
     create: (req, res, next) => {
-      model.create(req.body.card)
+      db.models.card.create(req.body.card)
         .then(async (card) => {
           const tags = req.body.card.tags !== undefined ? req.body.card.tags : null
           await card.setTags(tags)
@@ -33,7 +31,7 @@ module.exports = function (db) {
         })
     },
     delete: (req, res, next) => {
-      model.findByPk(req.params.card_id)
+      db.models.card.findByPk(req.params.card_id)
         .then(async card => {
           await card.destroy()
         })
@@ -54,7 +52,7 @@ module.exports = function (db) {
         })
     },
     edit: (req, res, next) => {
-      model.findByPk(req.params.card_id, { include: db.models.tag })
+      db.models.card.findByPk(req.params.card_id, { include: db.models.tag })
         .then(async (card) => {
           const tags = await db.models.tag.findAll()
           res.render('edit', { card, tags })
@@ -68,7 +66,7 @@ module.exports = function (db) {
         })
     },
     list: (req, res, next) => {
-      model.findAll({ order: [['front', 'ASC']] })
+      db.models.card.findAll({ order: [['front', 'ASC']] })
         .then(cards => {
           res.render('list', { cards })
         })
@@ -78,7 +76,7 @@ module.exports = function (db) {
       res.render('new', { tags })
     },
     show: (req, res, next) => {
-      model.findByPk(req.params.card_id, { include: db.models.tag })
+      db.models.card.findByPk(req.params.card_id, { include: db.models.tag })
         .then(card => {
           res.render('show', { card })
         })
@@ -92,7 +90,7 @@ module.exports = function (db) {
         })
     },
     update: (req, res, next) => {
-      model.findByPk(req.body.card.id)
+      db.models.card.findByPk(req.body.card.id)
         .then(async (card) => {
           await card.update(req.body.card)
           const tags = req.body.card.tags !== undefined ? req.body.card.tags : null

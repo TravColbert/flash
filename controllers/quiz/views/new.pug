@@ -2,25 +2,21 @@ extends ../../../views/layout
 
 block variables
   - var selected = "Quiz"
-  - var title = "Quizes"
+  - var title = "Quizzes"
 
 block content 
   h2 Create quiz
-  form.new.quiz(action="/quizes/", method="POST")
-    //- .label 
-    //-   label(for="card-front") Card front
-    //- .input.front 
-    //-   input#card-front(type="text", name="card[front]", vaue="", autofocus)
-    //- .label 
-    //-   label(for="card-back") Card back
-    //- .input.back 
-    //-   textarea#card-back(name="card[back]")
+  form.new.quiz(action="/quizzes/", method="POST")
+    .label 
+      label(for="quiz-length") Quiz length
+    .input.front 
+      input#quiz-length(type="number", name="quiz[length]", value="10", min="5", max="100", autofocus)
     .label
-      label Tag(s):
+      label Choose a tag:
     .input.tags
-      legend Choose tag
       select#tag-select(name="quiz[tag]")
-      each tag in tags
-        option(value=tag.id)= tag.name
+        each tag in tags
+          option(value='' selected) -- choose a tag --
+          option(value=tag.id)= tag.name
     .input.submit
     input(type="submit", value="Submit")

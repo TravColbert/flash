@@ -2,16 +2,18 @@ extends ../../../views/layout
 
 block variables
   - var selected = "Quiz"
-  - var title = "Quizes"
+  - var title = "Quizzes"
 
 block content
-  h2 List cards (#{quizes.length} #{(quizes.length !== 1) ? 'quizes' : 'zuiz'})
-  .quizes.list
-    each quiz in quizes
+  h2 List quizzes (#{quizzes.length} #{(quizzes.length !== 1) ? 'quizzes' : 'quiz'})
+  .quizzes.list
+    each quiz in quizzes
       .quiz.item
         .field.tag 
-          a(href=`/quizes/${quiz.id}` title=quiz.id) #{quiz.tags[0].name}
-          form(id="quiz-delete-#{quiz.id}", action="/quizes/" + quiz.id + "?_method=delete", method="POST")
+          - console.log(quiz.tag)
+          - const quizLink = `${quiz.tag.name} (${quiz.length} ${(quiz.length === 1) ? 'card' : 'cards' })`
+          a(href=`/quizzes/${quiz.id}` title=quiz.id)= quizLink
+          form(id=`quiz-delete-${quiz.id}`, action="/quizzes/" + quiz.id + "?_method=delete", method="POST")
             input(type="submit", value="Delete") 
   .new
-    a(href="/quizes/new", title="new quiz")= "Create a new quiz"
+    a(href="/quizzes/new", title="new quiz")= "Create a new quiz"
