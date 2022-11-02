@@ -1,8 +1,8 @@
 extends ../../../views/layout
 
 block variables
-  - var selected = "Card"
-  - var title = "Cards"
+  - var selected = "Card";
+  - var title = "Cards";
 
 block content 
   h2 Edit card #{card.front}
@@ -21,10 +21,10 @@ block content
       label Tag(s):
     .input.tags
       legend Choose tags
-      - const cardTagIds = card.tags.map(tag => tag.id)
+      - const cardTagIds = card.tags.map(tag => tag.id);
       each tag in tags
         .tag
-          - const checked = cardTagIds.includes(tag.id) ? true : false
+          - const checked = cardTagIds.includes(tag.id) ? true : false;
           input(type="checkbox", id=`tag_${tag.id}`, name="card[tags]", value=tag.id, checked=checked)
           label(for=`tag_${tag.id}`)= tag.name
     .input.submit

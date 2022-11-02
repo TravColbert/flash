@@ -25,7 +25,7 @@ module.exports = function (db) {
         })
     },
     delete: (req, res, next) => {
-      db.models.tag.findByPk(req.params.tag_id)
+      db.models.tag.findByPk(req.params.tagId)
         .then(tag => {
           return tag.destroy()
         })

@@ -31,7 +31,7 @@ module.exports = function (db) {
         })
     },
     delete: (req, res, next) => {
-      db.models.card.findByPk(req.params.card_id)
+      db.models.card.findByPk(req.params.cardId)
         .then(async card => {
           await card.destroy()
         })
@@ -52,7 +52,7 @@ module.exports = function (db) {
         })
     },
     edit: (req, res, next) => {
-      db.models.card.findByPk(req.params.card_id, { include: db.models.tag })
+      db.models.card.findByPk(req.params.cardId, { include: db.models.tag })
         .then(async (card) => {
           const tags = await db.models.tag.findAll()
           res.render('edit', { card, tags })
@@ -76,7 +76,7 @@ module.exports = function (db) {
       res.render('new', { tags })
     },
     show: (req, res, next) => {
-      db.models.card.findByPk(req.params.card_id, { include: db.models.tag })
+      db.models.card.findByPk(req.params.cardId, { include: db.models.tag })
         .then(card => {
           res.render('show', { card })
         })

@@ -1,15 +1,15 @@
 extends ../../../views/layout
 
 block variables
-  - var selected = "Quiz"
-  - var title = "Quizzes"
+  - var selected = "Quiz";
+  - var title = "Quizzes";
 
 block content 
   h2 Create quiz
   form.new.quiz(action="/quizzes/", method="POST")
     .label 
       label(for="quiz-length") Quiz length
-    .input.front 
+    .input.front
       input#quiz-length(type="number", name="quiz[length]", value="10", min="5", max="100", autofocus)
     .label
       label Choose a tag:

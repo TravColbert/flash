@@ -7,10 +7,10 @@
 var db = require('../../db');
 
 exports.name = 'pet';
-exports.prefix = '/user/:user_id';
+exports.prefix = '/user/:userId';
 
 exports.create = function(req, res, next){
-  var id = req.params.user_id;
+  var id = req.params.userId;
   var user = db.users[id];
   var body = req.body;
   if (!user) return next('route');

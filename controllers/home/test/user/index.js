@@ -7,7 +7,7 @@
 var db = require('../../db');
 
 exports.before = function(req, res, next){
-  var id = req.params.user_id;
+  var id = req.params.userId;
   if (!id) return next();
   // pretend to query a database...
   process.nextTick(function(){

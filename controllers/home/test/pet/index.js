@@ -7,7 +7,7 @@
 var db = require("../../db");
 
 exports.before = function (req, res, next) {
-  var pet = db.pets[req.params.pet_id];
+  var pet = db.pets[req.params.petId];
   req.pet = !pet ? {} : pet;
   next();
 };
