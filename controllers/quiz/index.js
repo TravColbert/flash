@@ -5,7 +5,7 @@ const shuffle = require('shuffle-array')
 module.exports = (db) => {
   const createSequence = function (length = 10) {
     const sequence = []
-    for (let i = 1; i <= length; i++) {
+    for (let i = 0; i < length; i++) {
       sequence.push(i)
     }
     console.log(sequence)
@@ -16,8 +16,9 @@ module.exports = (db) => {
     create: (req, res, next) => {
       const length = req.body.quiz.length || 10
       const tagId = req.body.quiz.tag
+      const side = req.body.quiz.side || 'front'
       const sequence = JSON.stringify(createSequence(length))
-      db.models.quiz.create({ sequence, length, tagId })
+      db.models.quiz.create({ sequence, length, side, tagId })
         .then(() => {
           res.redirect('/quizzes')
         })
@@ -66,8 +67,17 @@ module.exports = (db) => {
       res.render('new', { tags })
     },
     show: (req, res, next) => {
+      // params:
+      //   step: index of the current point in the sequence
+      //   side: front | back
+      // console.log(req.params)
+      // console.log(req.query)
+      const step = parseInt(req.query.step) || 1
+      const actualStep = (step - 1)
+      console.log(actualStep)
+      const showSide = req.query.side || 'front'
       db.models.quiz.findByPk(req.params.quizId, { include: db.models.tag })
-        .then(quiz => {
+        .then(async quiz => {
           if (!quiz) {
             req.session.messages.push({
               type: 'fail',
@@ -75,7 +85,19 @@ module.exports = (db) => {
             })
             res.redirect('/quizzes')
           }
-          res.render('show', { quiz })
+          const sequence = JSON.parse(quiz.sequence)
+          const cards = await quiz.tag.getCards({ order: ['id'] })
+          quiz.step = step
+          quiz.actualStep = actualStep
+          quiz.currentCardIndex = sequence[actualStep]
+          const card = cards[sequence[actualStep]]
+          quiz.showSide = quiz.side !== 'any'
+            ? showSide
+            : ['front', 'back'][Math.floor(Math.random() * 2)]
+          quiz.next = sequence.length > step ? (step + 1) : false
+          quiz.previous = (step === 1 || !step) ? 1 : (step - 1)
+          // console.log(quiz)
+          res.render('show', { quiz, card })
         })
         .catch(err => {
           next(err)
