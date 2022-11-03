@@ -10,7 +10,6 @@ block content
     each quiz in quizzes
       .quiz.item
         .field.tag 
-          - console.log(quiz.tag);
           - const quizLink = `${quiz.tag.name} (${quiz.side}) (${quiz.length} ${(quiz.length === 1) ? 'card' : 'cards' })`;
           a(href=`/quizzes/${quiz.id}` title=quiz.id)= quizLink
           form(id=`quiz-delete-${quiz.id}`, action="/quizzes/" + quiz.id + "?_method=delete", method="POST")

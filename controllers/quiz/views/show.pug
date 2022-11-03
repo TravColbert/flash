@@ -2,21 +2,13 @@ extends ../../../views/layout
 
 block variables
   - var selected = "Quiz";
-  - var title = "Quiz";
+  - var title = `Quiz: ${quiz.tag.name}`;
 
 block content
   h2 Quiz #{quiz.id}
   .quiz.item
     .quiz.sequence.current
-      h1 #{quiz.step}
-    .quiz.tag.name #{quiz.tag.name}
-    .quiz.step Step: #{quiz.step}
-    .quiz.actual-step ActualStep: #{quiz.actualStep}
-    .quiz.current-card-index Current card index: #{quiz.currentCardIndex}
-    .quiz.sequence Sequence: #{JSON.stringify(quiz.sequence)}
-    .quiz.next Next: #{quiz.next}
-    .quiz.previous Previous: #{quiz.previous}
-    .quiz.side Side: #{quiz.showSide}
+      h3 Card ##{quiz.step} (#{quiz.showSide}):
     .card
       .face #{card[quiz.showSide]}
       .response

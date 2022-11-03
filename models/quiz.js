@@ -14,7 +14,8 @@ module.exports = function (orm, db) {
     seed: {
       sequence: '[0,1,2,3,4]',
       length: 5,
-      side: 'front'
+      side: 'front',
+      tagId: 1
     }
   }
 }
