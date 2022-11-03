@@ -78,10 +78,10 @@ const db = require('./lib/boot-models')({
   dbConfig: 'sqlite::memory'
 })
 
-app.use((req, res, next) => {
-  console.log('=> %s %s %s', req.method, req.url, req.params)
-  next()
-})
+// app.use((req, res, next) => {
+//   verbose && console.log('=> %s %s %s', req.method, req.url, req.params)
+//   next()
+// })
 
 require('./lib/boot-controllers')(app, { db, verbose: !module.parent })
 

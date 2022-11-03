@@ -9,9 +9,6 @@ module.exports = function (orm) {
       await db.models.tag.hasMany(db.models.quiz, {
         foreignKey: 'tagId'
       })
-      await db.models.tag.hasMany(db.models.unicorn, {
-        foreignKey: 'tagId'
-      })
     },
     seed: {
       name: 'Animals'

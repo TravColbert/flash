@@ -8,9 +8,12 @@ block content
   h2 List tags (#{tags.length} #{(tags.length !== 1) ? 'tags' : 'tag'})
   .tags.list
     each tag in tags
-      .tag.item
+      article.tag.item
         .field.name #{tag.name}
-          form(id="tag-delete-#{tag.id}", action="/tags/" + tag.id + "?_method=delete", method="POST")
+        footer
+          //- button(hx-get=`/tags/${tag.id}?_method=delete` hx-target='body') Delete
+          form(id=`tag-delete-${tag.id}`, action="/tags/" + tag.id + "?_method=delete", method="POST")
             input(type="submit", value="Delete") 
   .new
-    a(href="/tags/new", title="new tag")= "Create new tag"
+    a(href="/tags/new", title="new tag") Create new tag
+    //- button(hx-get="/tags/new", title="new tag", hx-target='body') Create new tag

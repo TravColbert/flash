@@ -6,21 +6,20 @@ block variables
 
 block content
   h2 Quiz #{quiz.id}
-  .quiz.item
-    .quiz.sequence.current
+  article.quiz.item
+    header.quiz.sequence.current
       h3 Card ##{quiz.step} (#{quiz.showSide}):
     .card
       .face #{card[quiz.showSide]}
-      .response
-        if quiz.side != quiz.showSide
+    footer
       .navigation
         .flip
           a(href=`/quizzes/${quiz.id}?step=${quiz.step}&side=${quiz.showSide === 'front' ? 'back' : 'front'}`) Flip
-    .quiz
-      .navigation
-        if quiz.step > 1
-          .previous
-            a(href=`/quizzes/${quiz.id}?step=${quiz.previous}&side=${quiz.side}`) Previous
-        if quiz.next
-          .next
-            a(href=`/quizzes/${quiz.id}?step=${quiz.next}&side=${quiz.side}`) Next
+      .quiz
+        .navigation
+          if quiz.step > 1
+            .previous
+              a(href=`/quizzes/${quiz.id}?step=${quiz.previous}&side=${quiz.side}`) Previous
+          if quiz.next
+            .next
+              a(href=`/quizzes/${quiz.id}?step=${quiz.next}&side=${quiz.side}`) Next
