@@ -13,32 +13,22 @@ html(lang='en')
   head
     meta(charset='utf-8')
     meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
-    link(rel='stylesheet', href='https://unpkg.com/@picocss/pico@latest/css/pico.min.css')
+    link(rel="stylesheet", href='https://unpkg.com/spectre.css/dist/spectre.min.css')
+    //- link(rel='stylesheet', href='https://unpkg.com/@picocss/pico@latest/css/pico.min.css')
     title Flashcards #{title}
-  body
-    header.container
-      nav
-        ul
-          li
-            h1.page-title Flashcards #{(title) ? "- " + title : ""}
-        ul
-          li
-            strong
-              a(href="/", title="Home") Home
-          if user == undefined
-            li
-              a(href="/tags") Tags
-            li
-              a(href="/cards") Cards
-            li
-              a(href="/quizzes") Quizzes
-            li
-              a(href="/user/login") Log In
-          else
-            li
-              a(href="/dashboard") Dashboard
-            li
-              a(href="/user/logout") Logout
+  body.container.grid-lg
+    header.navbar
+      section.navbar-section
+        a.page-title.navbar-brand.text-bold.mr-2(href="/", title="Flashcards Home") Flashcards #{(title) ? "- " + title : ""}
+      section.navbar-section
+        if user == undefined
+          a.btn.btn-link(href="/tags") Tags
+          a.btn.btn-link(href="/cards") Cards
+          a.btn.btn-link(href="/quizzes") Quizzes
+          a.btn.btn-link(href="/user/login") Log In
+        else
+          a.btn.btn-link(href="/dashboard") Dashboard
+          a.btn.btn-link(href="/user/logout") Logout
     main.container
       +messages(messages)
 
@@ -47,4 +37,4 @@ html(lang='en')
 
     hr.bottom
     footer Built with #[a(href='https://expressjs.com/') Express.js], login powered by #[a(href='https://developer.okta.com/') Okta].
-      //- script(src='https://unpkg.com/htmx.org@1.8.2')
+      script(src='https://unpkg.com/htmx.org@1.8.2')

@@ -5,15 +5,15 @@ block variables
   - var title = "Tags";
 
 block content
-  h2 List tags (#{tags.length} #{(tags.length !== 1) ? 'tags' : 'tag'})
-  .tags.list
-    each tag in tags
-      article.tag.item
-        .field.name #{tag.name}
-        footer
-          //- button(hx-get=`/tags/${tag.id}?_method=delete` hx-target='body') Delete
-          form(id=`tag-delete-${tag.id}`, action="/tags/" + tag.id + "?_method=delete", method="POST")
-            input(type="submit", value="Delete") 
-  .new
-    a(href="/tags/new", title="new tag") Create new tag
-    //- button(hx-get="/tags/new", title="new tag", hx-target='body') Create new tag
+  .panel
+    .panel-header
+      .panel-title List tags #{tags.length} #{(tags.length !== 1) ? 'tags' : 'tag'}
+    .panel-body.tags.list
+      each tag in tags
+        .tag.item.tile.tile-centered
+          .name.tile-content 
+            .tile-title.text-ellipsis.text-bold #{tag.name}
+          .tile-action
+            button.btn(hx-post=`/tags/${tag.id}?_method=delete`, hx-target='body') Delete
+    .panel-footer
+      button.new.tag.btn.btn-primary.btn-block(hx-get="/tags/new", title="new tag", hx-push-url="true", hx-target='body') Create new tag
