@@ -9,14 +9,17 @@ mixin messages(messages)
         .message.flash(class=message.type)= message.text
 
 doctype html
-html(lang='en')
+html(lang='en', data-theme='light')
   head
     meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
     meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
     link(rel="stylesheet", href='https://unpkg.com/spectre.css/dist/spectre.min.css')
+    link(rel="stylesheet", href='stylesheets/style.css')
+    script(src='https://unpkg.com/htmx.org@1.8.2')
     //- link(rel='stylesheet', href='https://unpkg.com/@picocss/pico@latest/css/pico.min.css')
     title Flashcards #{title}
-  body.container.grid-lg
+  body
     header.navbar
       section.navbar-section
         a.page-title.navbar-brand.text-bold.mr-2(href="/", title="Flashcards Home") Flashcards #{(title) ? "- " + title : ""}
@@ -31,10 +34,7 @@ html(lang='en')
           a.btn.btn-link(href="/user/logout") Logout
     main.container
       +messages(messages)
-
-      section
-        block content
+      block content
 
     hr.bottom
     footer Built with #[a(href='https://expressjs.com/') Express.js], login powered by #[a(href='https://developer.okta.com/') Okta].
-      script(src='https://unpkg.com/htmx.org@1.8.2')
