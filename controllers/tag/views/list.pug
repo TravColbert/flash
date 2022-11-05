@@ -8,15 +8,12 @@ block content
   h2 Tags #{tags.length} #{(tags.length !== 1) ? 'tags' : 'tag'}
   section.header
     .panel-title List tags #{tags.length} #{(tags.length !== 1) ? 'tags' : 'tag'}
-  section.body.tags.list
-    table
-      thead
-        tr 
-          th(scope='col') Tag
+  section.tags.list.container
     each tag in tags
-      .tag.item
-        .actions
-          a.btn(hx-post=`/tags/${tag.id}?_method=delete`, hx-target='body') Delete
-        .name #{tag.name}
+      .tag.item.columns
+        .name.column.col-sm-12.col-8
+          h3 #{tag.name}
+        .actions.column.col-sm-12.col-4
+          a.btn.float-right(hx-post=`/tags/${tag.id}?_method=delete`, hx-target='body') Delete
   section.footer
     button.new.tag.btn.btn-primary.btn-block(hx-get="/tags/new", title="new tag", hx-push-url="true", hx-target='body') Create new tag
