@@ -5,13 +5,18 @@ block variables
   - var title = "Cards";
 
 block content
-  h2 List cards (#{cards.length} #{(cards.length !== 1) ? 'cards' : 'card'})
-  .cards.list
+  h2 Cards 
+  section.header.
+    (#{cards.length} #{(cards.length !== 1) ? 'cards' : 'card'})
+  section.cards.list.container
     each card in cards
-      article.card.item
-        .field.front
-          strong 
-            a(href=`/cards/${card.id}` title=card.front) #{card.front}
-        .field.back= card.back
-  .new
-    a(role='button' href='/cards/new', title='new card') Create a new card
+      .item.columns
+        .column.col-sm-12.col-8
+          .front
+            strong 
+              a(href=`/cards/${card.id}` title=card.front) #{card.front}
+          .back= card.back
+        .actions.column.col-sm-12.col-4
+          a.btn.btn-error.float-right(hx-post=`/cards/${card.id}?_method=delete`, hx-target='body') Delete
+  section.footer
+    button.new.btn.btn-primary.btn-block(hx-get='/cards/new', title='new card', hx-target='body') Create new card

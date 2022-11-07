@@ -5,16 +5,16 @@ block variables
   - var title = "Cards";
 
 block content
-  hgroup
-    h2 Show card
-  article.card.item
-    .front
-      h3 #{card.front}
-    .back #{card.back}
-    footer
-      .field.tags
-        each tag in card.tags
-          .tag #{tag.name}
-      .controls
-        a(role='button', href=`/cards/${card.id}/edit`, title='edit card')= `Edit ${card.front}`
-        button.secondary.outline(hx-post=`/cards/${card.id}?_method=delete`, title='delete card', hx-target='body')= `Delete ${card.front}`
+  h2 Card
+  section.item
+    .card-details
+      .front
+        h3 #{card.front}
+      .back #{card.back}
+  section.footer
+    .card-tags
+      each tag in card.tags
+        .tag #{tag.name}
+    .controls
+      button.btn.btn-primary(hx-get=`/cards/${card.id}/edit`, hx-target='body')= `Edit ${card.front}`
+      button.btn.btn-error(hx-post=`/cards/${card.id}?_method=delete`, title='delete card', hx-target='body')= `Delete ${card.front}`

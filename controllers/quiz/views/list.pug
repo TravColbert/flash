@@ -5,14 +5,16 @@ block variables
   - var title = "Quizzes";
 
 block content
-  h2 List quizzes (#{quizzes.length} #{(quizzes.length !== 1) ? 'quizzes' : 'quiz'})
-  .quizzes.list
+  h2 Quizzes
+  section.header. 
+    (#{quizzes.length} #{(quizzes.length !== 1) ? 'quizzes' : 'quiz'})
+  section.quizzes.list.container
     each quiz in quizzes
-      .quiz.item
-        .field.tag 
+      .item.columns
+        .tag-name.column.col-sm-12.col-8 
           - const quizLink = `${quiz.tag.name} (${quiz.side}) (${quiz.length} ${(quiz.length === 1) ? 'card' : 'cards' })`;
           a(href=`/quizzes/${quiz.id}` title=quiz.id)= quizLink
-          form(id=`quiz-delete-${quiz.id}`, action="/quizzes/" + quiz.id + "?_method=delete", method="POST")
-            input(type="submit", value="Delete") 
-  .new
-    a(href="/quizzes/new", title="new quiz")= "Create a new quiz"
+        .actions.column.col-sm-12.col-4
+          a.btn.btn-error.float-right(hx-post="/quizzes/" + quiz.id + "?_method=delete", hx-target='body') Delete
+  section.footer
+    button.new.btn.btn-primary.btn-block(hx-get="/quizzes/new", title="new quiz", hx-push-url="true", hx-target='body') Create new quiz

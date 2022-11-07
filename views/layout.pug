@@ -6,7 +6,7 @@ mixin messages(messages)
   if messages.length > 0
     .messages
       each message in messages 
-        .message.flash(class=message.type)= message.text
+        .toast.message(class=`toast-${message.type}`)= message.text
 
 doctype html
 html(lang='en', data-theme='light')
