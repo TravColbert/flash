@@ -2,24 +2,26 @@ extends ../../../views/layout
 
 block variables
   - var selected = "Quiz";
-  - var title = `Quiz: ${quiz.tag.name}`;
+  - var title = "Quiz";
 
 block content
-  h2 Quiz #{quiz.id}
-  article.quiz.item
-    header.quiz.sequence.current
-      h3 Card ##{quiz.step} (#{quiz.showSide}):
-    .card
-      .face #{card[quiz.showSide]}
-    footer
+  h2 Quiz : #{quiz.tag.name}-#{quiz.id}
+  .card.quiz.item
+    .progress 
+      .bar.bar-sm
+        .bar-item(role="progressbar" style=`width:${quiz.progress}%;` aria-valuenow=quiz.progress aria-valuemin="0" aria-valuemax="100")
+    .card-header
+      .card-title
+        h4= `Card #${quiz.step}`
+      .card-subtitle.text-gray= `${quiz.showSide}`
+    .card-body.quiz.sequence.current
+      .flashcard
+        h4.face #{card[quiz.showSide]}
+    .card-footer
       .navigation
-        .flip
-          a(href=`/quizzes/${quiz.id}?step=${quiz.step}&side=${quiz.showSide === 'front' ? 'back' : 'front'}`) Flip
-      .quiz
-        .navigation
-          if quiz.step > 1
-            .previous
-              a(href=`/quizzes/${quiz.id}?step=${quiz.previous}&side=${quiz.side}`) Previous
-          if quiz.next
-            .next
-              a(href=`/quizzes/${quiz.id}?step=${quiz.next}&side=${quiz.side}`) Next
+        .btn-group
+          button.btn(hx-get=`/quizzes/${quiz.id}?step=${quiz.previous}&side=${quiz.side}`, hx-target='body', disabled=(quiz.step === 1))
+            string &#8810;
+          button.btn.btn-success(hx-get=`/quizzes/${quiz.id}?step=${quiz.step}&side=${quiz.showSide === 'front' ? 'back' : 'front'}`, hx-target='body') Flip
+          button.btn(hx-get=`/quizzes/${quiz.id}?step=${quiz.next}&side=${quiz.side}`, hx-target='body', disabled=!(quiz.next))
+            strong &#8811

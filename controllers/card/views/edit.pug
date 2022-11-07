@@ -6,28 +6,23 @@ block variables
 
 block content 
   h2 Edit card #{card.front}
-  article.edit.card
-    form.edit.card(id=`card-edit-${card.id}`, action=`/cards/${card.id}?_method=put`, method="POST")
-      .input.card-id 
-        input(type="hidden" name="card[id]" value=card.id)
-      .label 
-        label(for="card-front")= "Card front"
-      .input.front 
-        input#card-front(type="text", name="card[front]", value=card.front, autofocus)
-      .label 
-        label(for="card-back")= "Card back"
-      .input.back 
-        textarea#card-back(name="card[back]")= card.back
-      .label
-        label Tag(s):
-      .input.tags
-        legend Choose tags
+  section.edit
+    form.edit(id=`card-edit-${card.id}`, action=`/cards/${card.id}?_method=put`, method="POST")
+      input(type="hidden" name="card[id]" value=card.id)
+      .form-group 
+        label.form-label(for="card-front") Card front
+        input#card-front.form-input(type="text", name="card[front]", value=card.front, , placeholder="Front text of card", autofocus)
+        label.form-label(for="card-back") Card back
+        textarea#card-back.form-input(name="card[back]", placeholder="Back of card")= card.back
+      .form-group
+        legend Choose tags:
         - const cardTagIds = card.tags.map(tag => tag.id);
         each tag in tags
-          .tag
-            - const checked = cardTagIds.includes(tag.id) ? true : false;
+          - const checked = cardTagIds.includes(tag.id) ? true : false;
+          label.form-checkbox(for=`tag_${tag.id}`)= tag.name
             input(type="checkbox", id=`tag_${tag.id}`, name="card[tags]", value=tag.id, checked=checked)
-            label(for=`tag_${tag.id}`)= tag.name
+            i.form-icon
     footer
-      input(type="submit", form=`card-edit-${card.id}`, value="Submit")
-      a.secondary.outline(role='button', href=`/cards/${card.id}`) Cancel
+      .form-group
+        input.btn.btn-primary(type="submit", form=`card-edit-${card.id}`, value="Submit")
+        button.btn.btn-secondary(hx-get=`/cards/${card.id}`, hx-target='body') Cancel

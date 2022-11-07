@@ -14,7 +14,7 @@ block content
   section.footer
     .card-tags
       each tag in card.tags
-        .tag #{tag.name}
+        span.chip.tag= tag.name
     .controls
       button.btn.btn-primary(hx-get=`/cards/${card.id}/edit`, hx-target='body')= `Edit ${card.front}`
       button.btn.btn-error(hx-post=`/cards/${card.id}?_method=delete`, title='delete card', hx-target='body')= `Delete ${card.front}`

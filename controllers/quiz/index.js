@@ -14,6 +14,13 @@ module.exports = (db) => {
 
   return {
     create: (req, res, next) => {
+      if (!req.body.quiz.tag || req.body.quiz.tag === '') {
+        req.session.messages.push({
+          type: 'error',
+          text: 'Please choose a tag'
+        })
+        return res.redirect('/quizzes/new')
+      }
       const length = req.body.quiz.length || 10
       const tagId = req.body.quiz.tag
       const side = req.body.quiz.side || 'front'
@@ -88,6 +95,7 @@ module.exports = (db) => {
           const sequence = JSON.parse(quiz.sequence)
           const cards = await quiz.tag.getCards({ order: ['id'] })
           quiz.step = step
+          quiz.progress = (step / sequence.length) * 100
           quiz.actualStep = actualStep
           quiz.currentCardIndex = sequence[actualStep]
           const card = cards[sequence[actualStep]]

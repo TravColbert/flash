@@ -7,7 +7,14 @@ module.exports = function (db) {
     //   next()
     // },
     create: (req, res, next) => {
-      db.models.tag.create(req.body)
+      if (!req.body.tag.name || req.body.tag.name === '') {
+        req.session.messages.push({
+          type: 'error',
+          text: 'Tag name cannot be blank'
+        })
+        return res.render('new')
+      }
+      db.models.tag.create(req.body.tag)
         .then(model => {
           req.session.messages.push({
             type: 'success',
@@ -16,7 +23,7 @@ module.exports = function (db) {
         })
         .catch(() => {
           req.session.messages.push({
-            type: 'fail',
+            type: 'error',
             text: 'Failed to create tag'
           })
         })
@@ -37,7 +44,7 @@ module.exports = function (db) {
         })
         .catch(() => {
           req.session.messages.push({
-            type: 'fail',
+            type: 'error',
             text: 'Failed to delete tag'
           })
         })

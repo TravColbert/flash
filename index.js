@@ -1,14 +1,16 @@
 'use strict'
 
+require('dotenv').config()
+
 /**
  * Module dependencies.
  */
-
 const express = require('express')
 const logger = require('morgan')
 const path = require('path')
 const session = require('express-session')
 const methodOverride = require('method-override')
+const { auth } = require('express-openid-connect')
 
 const app = (module.exports = express())
 
@@ -17,6 +19,44 @@ app.set('view engine', 'pug')
 
 // set views for error and 404 pages
 app.set('views', path.join(__dirname, 'views'))
+
+// Set up AAA
+
+// app.use(
+//   require('express-session')({
+//     secret: process.env.APP_SECRET,
+//     resave: true,
+//     saveUninitialized: false
+//   })
+// )
+
+// const { ExpressOIDC } = require('@okta/oidc-middleware')
+// const oidc = new ExpressOIDC({
+//   appBaseUrl: process.env.HOST_URL,
+//   issuer: `${process.env.OKTA_ORG_URL}/oauth2/default`,
+//   client_id: process.env.OKTA_CLIENT_ID,
+//   client_secret: process.env.OKTA_CLIENT_SECRET,
+//   redirect_uri: `${process.env.HOST_URL}/callback`,
+//   scope: 'openid profile',
+//   routes: {
+//     loginCallback: {
+//       path: '/callback'
+//     }
+//   }
+// })
+// auth router attaches /login, /logout, and /callback routes to the baseURL
+const authConfig = {
+  authRequired: false,
+  auth0Logout: true,
+  secret: process.env.APP_SECRET,
+  baseURL: process.env.HOST_URL,
+  clientID: process.env.OKTA_CLIENT_ID,
+  issuerBaseURL: process.env.ISSUER_BASE_URL
+}
+console.log(authConfig)
+app.use(auth(authConfig))
+
+// app.use(oidc.router)
 
 // define a custom res.message() method
 // which stores messages in the session
@@ -49,6 +89,10 @@ app.use(express.urlencoded({ extended: true }))
 
 // allow overriding methods in query (?_method=put)
 app.use(methodOverride('_method'))
+
+app.get('/', (req, res) => {
+  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out')
+})
 
 // expose the "messages" local variable when views are rendered
 app.use(function (req, res, next) {

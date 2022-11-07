@@ -3,7 +3,7 @@ block variables
   - var title = 'Home';
 
 mixin messages(messages)
-  if messages.length > 0
+  if messages && messages.length > 0
     .messages
       each message in messages 
         .toast.message(class=`toast-${message.type}`)= message.text
@@ -15,7 +15,7 @@ html(lang='en', data-theme='light')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
     meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
     link(rel="stylesheet", href='https://unpkg.com/spectre.css/dist/spectre.min.css')
-    link(rel="stylesheet", href='stylesheets/style.css')
+    link(rel="stylesheet", href='/stylesheets/style.css')
     script(src='https://unpkg.com/htmx.org@1.8.2')
     //- link(rel='stylesheet', href='https://unpkg.com/@picocss/pico@latest/css/pico.min.css')
     title Flashcards #{title}

@@ -6,10 +6,11 @@ block variables
 
 block content 
   h2 Create tag
-  form.new.tag(action="/tags/", method="POST")
-    .label 
-      label(for="tag-name")= "Tag name"
-    .input.name 
-      input#tag-name(type="text", name="name", vaue="", autofocus)
-    .input.submit
-    input(type="submit", value="Submit")
+  section.new
+    form.new.tag(action="/tags/", method="POST")
+      .form-group
+        label.form-label(for="tag-name")= "Tag name"
+        input#tag-name.form-input(type="text", name="tag[name]", vaue="", placeholder="Tag name", pattern="[A-Za-z0-9]+", autofocus)
+      .form-group
+        input.btn.btn-primary(type="submit", value="Submit")
+        button.btn.btn-secondary(hx-get="/tags", hx-target="body") Cancel
