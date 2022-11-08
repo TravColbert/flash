@@ -1,11 +1,14 @@
 'use strict'
 
+const authHelper = require('../../lib/authentication')
+
 module.exports = function (db) {
   return {
-    // before: (req, res, next) => {
-    //   console.log('executing before()...')
-    //   next()
-    // },
+    before: (req, res, next) => {
+      console.log('executing before()...')
+      authHelper.ensureLoggedIn(req, res, next)
+      next()
+    },
     create: (req, res, next) => {
       if (!req.body.tag.name || req.body.tag.name === '') {
         req.session.messages.push({
