@@ -1,15 +1,18 @@
 'use strict'
 
-module.exports = {
-  ensureLoggedIn: (req, res, next) => {
-    if (req.isAuthenticated()) {
-      return next()
+module.exports = function () {
+  console.log(`\tauthentication helper: ***${__dirname}***`)
+  return {
+    ensureLoggedIn: (req, res, next) => {
+      if (req.isAuthenticated()) {
+        return
+      }
+      return res.redirect('/login')
+    },
+    logOut: (req, res) => {
+      // req.logout()
+      req.session.destroy()
+      res.redirect('/')
     }
-    res.redirect('/login')
-  },
-  logOut: (req, res) => {
-    // req.logout()
-    req.session.destroy()
-    res.redirect('/')
   }
 }

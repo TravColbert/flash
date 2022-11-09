@@ -1,12 +1,12 @@
 'use strict'
 
-const authHelper = require('../../lib/authentication')
+const authHelper = require('../../lib/authentication')()
 
 module.exports = function (db) {
+  console.log(`\ttag index: ***${__dirname}***`)
   return {
     before: (req, res, next) => {
       console.log('executing before()...')
-      authHelper.ensureLoggedIn(req, res, next)
       next()
     },
     create: (req, res, next) => {
@@ -56,6 +56,8 @@ module.exports = function (db) {
         })
     },
     list: (req, res, next) => {
+      authHelper.ensureLoggedIn(req, res, next)
+
       // model.findAll({ order: [['name', 'ASC']] })
       db.models.tag.findAll()
         .then(tags => {
