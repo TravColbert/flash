@@ -2,7 +2,15 @@ module.exports = function (orm) {
   return {
     order: 1,
     definition: {
-      name: orm.STRING
+      name: orm.STRING,
+      owner: {
+        type: orm.STRING,
+        allowNull: true
+      },
+      public: {
+        type: orm.BOOLEAN,
+        defaultValue: false
+      }
     },
     association: async (db) => {
       await db.models.tag.belongsToMany(db.models.card, { through: 'CardTag' })
@@ -11,7 +19,8 @@ module.exports = function (orm) {
       })
     },
     seed: {
-      name: 'Animals'
+      name: 'Animals',
+      public: true
     }
   }
 }

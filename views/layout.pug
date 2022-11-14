@@ -17,21 +17,20 @@ html(lang='en', data-theme='light')
     link(rel="stylesheet", href='https://unpkg.com/spectre.css/dist/spectre.min.css')
     link(rel="stylesheet", href='/stylesheets/style.css')
     script(src='https://unpkg.com/htmx.org@1.8.2')
-    //- link(rel='stylesheet', href='https://unpkg.com/@picocss/pico@latest/css/pico.min.css')
     title Flashcards #{title}
   body
     header.navbar
       section.navbar-section
         a.page-title.navbar-brand.text-bold.mr-2(href="/", title="Flashcards Home") Flashcards #{(title) ? "- " + title : ""}
       section.navbar-section
-        if user == undefined
+        if authenticated
           a.btn.btn-link(href="/tags") Tags
           a.btn.btn-link(href="/cards") Cards
           a.btn.btn-link(href="/quizzes") Quizzes
-          a.btn.btn-link(href="/user/login") Log In
+          a.btn.btn-link(href="/profile") Profile: #{user.displayName}
+          a.btn.btn-link(hx-post="/logout", hx-target='body') Logout
         else
-          a.btn.btn-link(href="/dashboard") Dashboard
-          a.btn.btn-link(href="/user/logout") Logout
+          a.btn.btn-link(href="/login") Log In
     main.container.grid-lg
       +messages(messages)
       block content

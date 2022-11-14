@@ -12,5 +12,10 @@ block content
         label.form-label(for="tag-name")= "Tag name"
         input#tag-name.form-input(type="text", name="tag[name]", vaue="", placeholder="Tag name", pattern="[A-Za-z0-9]+", autofocus)
       .form-group
+        legend Details:
+        label.form-switch Tag is public?
+          input#tag-public.form-input(type="checkbox", name="tag[public]")
+          i.form-icon
+      .form-group
         input.btn.btn-primary(type="submit", value="Submit")
         button.btn.btn-secondary(hx-get="/tags", hx-target="body") Cancel

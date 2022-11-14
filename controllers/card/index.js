@@ -1,13 +1,19 @@
 'use strict'
 
-module.exports = function (db) {
+const { Op } = require('sequelize')
+
+module.exports = function (db, authHelper) {
   return {
+    _authenticate: ['create', 'delete', 'edit', 'new', 'update'],
     before: (req, res, next) => {
       console.log(req.body)
       next()
     },
     create: (req, res, next) => {
-      db.models.card.create(req.body.card)
+      const isPublic = ('public' in req.body.card)
+      const createObj = { ...req.body.card, public: isPublic, owner: res.locals.user.id }
+      console.log(createObj)
+      db.models.card.create(createObj)
         .then(async (card) => {
           const tags = req.body.card.tags !== undefined ? req.body.card.tags : null
           await card.setTags(tags)
@@ -66,7 +72,23 @@ module.exports = function (db) {
         })
     },
     list: (req, res, next) => {
-      db.models.card.findAll({ order: [['front', 'ASC']] })
+      const whereClause = {
+        where: {
+          public: true
+        }
+      }
+      if (req.isAuthenticated()) {
+        whereClause.where = {
+          [Op.or]: [
+            { owner: res.locals.user?.id },
+            { public: true }
+          ]
+        }
+      }
+
+      db.models.card.findAll(whereClause, {
+        order: [['front', 'ASC']]
+      })
         .then(cards => {
           res.render('list', { cards })
         })

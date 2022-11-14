@@ -1,11 +1,15 @@
 'use strict'
 
+const { Op } = require('sequelize')
+
 module.exports = function (db) {
+  console.log(`\ttag index: ***${__dirname}***`)
   return {
-    // before: (req, res, next) => {
-    //   console.log('executing before()...')
-    //   next()
-    // },
+    // _authenticate: ['create', 'delete', 'list', 'new'],
+    before: (req, res, next) => {
+      console.log('executing before()...')
+      next()
+    },
     create: (req, res, next) => {
       if (!req.body.tag.name || req.body.tag.name === '') {
         req.session.messages.push({
@@ -53,8 +57,23 @@ module.exports = function (db) {
         })
     },
     list: (req, res, next) => {
-      // model.findAll({ order: [['name', 'ASC']] })
-      db.models.tag.findAll()
+      const whereClause = {
+        where: {
+          public: true
+        }
+      }
+      if (req.isAuthenticated()) {
+        whereClause.where = {
+          [Op.or]: [
+            { owner: res.locals.user?.id },
+            { public: true }
+          ]
+        }
+      }
+
+      db.models.tag.findAll(whereClause, {
+        order: [['name', 'ASC']]
+      })
         .then(tags => {
           res.render('list', { tags })
         })

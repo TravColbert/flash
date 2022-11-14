@@ -9,16 +9,22 @@ block content
   section.new
     form#card-new.new(action="/cards/", method="POST")
       .form-group
+        legend Contents:
         label.form-label(for="card-front") Card front
         input#card-front.form-input(type="text", name="card[front]", value="", placeholder="Front text of card", autofocus) 
         label.form-label(for="card-back") Card back
         textarea#card-back.form-input(name="card[back]", placeholder="Back of card")
       .form-group
-        legend Choose tags:
+        legend Tags:
         each tag in tags
           label.form-checkbox(for=`tag_${tag.id}`)= tag.name
             input(type="checkbox", id=`tag_${tag.id}`, name="card[tags]", value=tag.id)
             i.form-icon
+      .form-group
+        legend Details:
+        label.form-switch Card is public?
+          input#card-public.form-input(type="checkbox", name="card[public]")
+          i.form-icon
     footer
       .form-group
         input.btn.btn-primary(type="submit", form=`card-new`, value="Submit")
