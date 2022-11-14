@@ -9,19 +9,25 @@ block content
   section.new
     form#quiz-new.new(action="/quizzes/", method="POST")
       .form-group
-        label.form-label(for="quiz-length") Quiz length
+        legend Details:
+        label.form-label(for="quiz-length") Maximum number of cards:
         input#quiz-length.form-input(type="number", name="quiz[length]", value="10", min="5", max="100", autofocus)
-        label.form-label(for="quiz-side") Preferred side
+        label.form-label(for="quiz-side") Preferred side to show first:
         select#quiz-side.form-select(name="quiz[side]")
           option(value='front' selected) Front
           option(value='back') Back
           option(value='any') Any
       .form-group
-        label.form-label Choose a tag:
+        legend Tag:
         select#tag-select.form-select(name="quiz[tag]")
           option(value='' selected) -- choose a tag --
           each tag in tags
             option(value=tag.id)= tag.name
+      .form-group
+        legend Details:
+        label.form-switch Quiz is public?
+          input#quiz-public.form-input(type="checkbox", name="quiz[public]")
+          i.form-icon
     .footer
       .form-group
         input.btn.btn-primary(type="submit", form="quiz-new", value="Submit")

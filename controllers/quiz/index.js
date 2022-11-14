@@ -2,6 +2,8 @@
 
 const shuffle = require('shuffle-array')
 
+const { Op } = require('sequelize')
+
 module.exports = (db) => {
   const createSequence = function (length = 10) {
     const sequence = []
@@ -13,6 +15,7 @@ module.exports = (db) => {
   }
 
   return {
+    _authenticate: ['create', 'delete', 'new'],
     create: (req, res, next) => {
       if (!req.body.quiz.tag || req.body.quiz.tag === '') {
         req.session.messages.push({
@@ -25,7 +28,8 @@ module.exports = (db) => {
       const tagId = req.body.quiz.tag
       const side = req.body.quiz.side || 'front'
       const sequence = JSON.stringify(createSequence(length))
-      db.models.quiz.create({ sequence, length, side, tagId })
+      const isPublic = ('public' in req.body.quiz)
+      db.models.quiz.create({ sequence, length, side, tagId, public: isPublic, owner: res.locals.user.id })
         .then(() => {
           res.redirect('/quizzes')
         })
@@ -70,7 +74,23 @@ module.exports = (db) => {
         })
     },
     new: async (req, res, next) => {
-      const tags = await db.models.tag.findAll()
+      const whereClause = {
+        where: {
+          public: true
+        }
+      }
+      if (req.isAuthenticated()) {
+        whereClause.where = {
+          [Op.or]: [
+            { owner: res.locals.user?.id },
+            { public: true }
+          ]
+        }
+      }
+
+      const tags = await db.models.tag.findAll(whereClause, {
+        order: [['name', 'ASC']]
+      })
       res.render('new', { tags })
     },
     show: (req, res, next) => {

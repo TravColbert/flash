@@ -11,7 +11,21 @@ block content
   section.tags.list.container
     each tag in tags
       .item.columns
-        .name.column.col-12 #{tag.name}
+        .name.column.col-sm-12.col-4 #{tag.name}
+        .properties.column.col-sm-12.col-4
+          if tag.public
+            .text-muted.text-tiny.float-right public
+          else
+            .text-muted.text-tiny.float-right
+              s public
+          if tag.owner
+            .text-muted.text-tiny.float-right owned
+          else
+            .text-muted.text-tiny.float-right
+              s owned
+        .actions.column.col-sm-12.col-4
+          if user && user.id === tag.owner
+            button.delete.btn.btn-error.btn-sm.float-right(hx-post="/tags/#{tag.id}?_method='delete'", hx-target='body') Delete
   section.footer
     if user
       button.new.btn.btn-primary.btn-block(hx-get="/tags/new", title="new tag", hx-push-url="true", hx-target='body') Create new tag

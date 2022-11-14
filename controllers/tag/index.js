@@ -5,7 +5,7 @@ const { Op } = require('sequelize')
 module.exports = function (db) {
   console.log(`\ttag index: ***${__dirname}***`)
   return {
-    // _authenticate: ['create', 'delete', 'list', 'new'],
+    _authenticate: ['create', 'delete', 'list', 'new'],
     before: (req, res, next) => {
       console.log('executing before()...')
       next()
@@ -18,7 +18,9 @@ module.exports = function (db) {
         })
         return res.render('new')
       }
-      db.models.tag.create(req.body.tag)
+      const isPublic = ('public' in req.body.tag)
+      const createObj = { ...req.body.tag, public: isPublic, owner: res.locals.user.id }
+      db.models.tag.create(createObj)
         .then(model => {
           req.session.messages.push({
             type: 'success',
