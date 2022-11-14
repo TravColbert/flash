@@ -13,8 +13,11 @@ block content
       .back #{card.back}
   section.footer
     .card-tags
-      each tag in card.tags
-        span.chip.tag= tag.name
+      if card.tags.length
+        legend Tags:
+        each tag in card.tags
+          span.chip.tag= tag.name
     .controls
-      button.btn.btn-primary(hx-get=`/cards/${card.id}/edit`, hx-target='body')= `Edit ${card.front}`
-      button.btn.btn-error(hx-post=`/cards/${card.id}?_method=delete`, title='delete card', hx-target='body')= `Delete ${card.front}`
+      if user && user.id === card.owner
+        button.btn.btn-primary(hx-get=`/cards/${card.id}/edit`, hx-target='body')= `Edit ${card.front}`
+        button.btn.btn-error(hx-post=`/cards/${card.id}?_method=delete`, title='delete card', hx-target='body')= `Delete ${card.front}`

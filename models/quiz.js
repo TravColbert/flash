@@ -6,6 +6,14 @@ module.exports = function (orm, db) {
       side: {
         type: orm.ENUM,
         values: ['front', 'back', 'any']
+      },
+      owner: {
+        type: orm.STRING,
+        allowNull: true
+      },
+      public: {
+        type: orm.BOOLEAN,
+        defaultValue: false
       }
     },
     association: async (db) => {
@@ -15,7 +23,8 @@ module.exports = function (orm, db) {
       sequence: '[0,1,2,3,4]',
       length: 5,
       side: 'front',
-      tagId: 1
+      tagId: 1,
+      public: true
     }
   }
 }

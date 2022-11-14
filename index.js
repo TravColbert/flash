@@ -22,17 +22,6 @@ app.set('view engine', 'pug')
 // set views for error and 404 pages
 app.set('views', path.join(__dirname, 'views'))
 
-// const authConfig = {
-//   authRequired: false,
-//   auth0Logout: true,
-//   secret: process.env.APP_SECRET,
-//   baseURL: process.env.HOST_URL,
-//   clientID: process.env.OKTA_CLIENT_ID,
-//   issuerBaseURL: process.env.ISSUER_BASE_URL
-// }
-// console.log(authConfig)
-// app.use(auth(authConfig))
-
 // define a custom res.message() method
 // which stores messages in the session
 app.response.message = function (msg) {
@@ -55,7 +44,7 @@ app.use(
   session({
     resave: false, // don't save session if unmodified
     saveUninitialized: false, // don't create session until something stored
-    secret: 'some secret here'
+    secret: process.env.APP_SECRET
   })
 )
 
@@ -110,6 +99,8 @@ app.use(function (req, res, next) {
 app.use((req, res, next) => {
   res.locals.authenticated = req.isAuthenticated()
   res.locals.user = req.user
+  console.log(`\t*** User: ${JSON.stringify(res.locals.user)}`)
+  console.log(`\t*** Authenticated?: ${res.locals.authenticated}`)
   next()
 })
 

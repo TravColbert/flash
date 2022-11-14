@@ -11,8 +11,7 @@ block content
   section.tags.list.container
     each tag in tags
       .item.columns
-        .name.column.col-sm-12.col-8 #{tag.name}
-        .actions.column.col-sm-12.col-4
-          a.btn.btn-error.float-right(hx-post=`/tags/${tag.id}?_method=delete`, hx-target='body') Delete
+        .name.column.col-12 #{tag.name}
   section.footer
-    button.new.btn.btn-primary.btn-block(hx-get="/tags/new", title="new tag", hx-push-url="true", hx-target='body') Create new tag
+    if user
+      button.new.btn.btn-primary.btn-block(hx-get="/tags/new", title="new tag", hx-push-url="true", hx-target='body') Create new tag

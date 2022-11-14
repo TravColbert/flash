@@ -4,15 +4,10 @@ module.exports = function () {
   console.log(`\tauthentication helper: ***${__dirname}***`)
   return {
     ensureLoggedIn: (req, res, next) => {
-      if (req.isAuthenticated()) {
-        return
-      }
-      return res.redirect('/login')
-    },
-    logOut: (req, res) => {
-      // req.logout()
-      req.session.destroy()
-      res.redirect('/')
+      const authenticated = req.isAuthenticated()
+      console.log(`\t*** authenticated: ${authenticated}`)
+      if (!authenticated) return res.redirect('/login')
+      next()
     }
   }
 }
