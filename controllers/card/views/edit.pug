@@ -22,6 +22,11 @@ block content
           label.form-checkbox(for=`tag_${tag.id}`)= tag.name
             input(type="checkbox", id=`tag_${tag.id}`, name="card[tags]", value=tag.id, checked=checked)
             i.form-icon
+      .form-group
+        legend Details:
+        label.form-switch Card is public?
+          input#card-public.form-input(type="checkbox", name="card[public]", checked=card.public)
+          i.form-icon
     footer
       .form-group
         input.btn.btn-primary(type="submit", form=`card-edit-${card.id}`, value="Submit")

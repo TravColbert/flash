@@ -20,4 +20,4 @@ block content
     .controls
       if user && user.id === card.owner
         button.btn.btn-primary(hx-get=`/cards/${card.id}/edit`, hx-target='body')= `Edit ${card.front}`
-        button.btn.btn-error(hx-post=`/cards/${card.id}?_method=delete`, title='delete card', hx-target='body')= `Delete ${card.front}`
+        button.btn.btn-error(hx-post=`/cards/${card.id}?_method=delete`, title='delete card', hx-target='body', hx-confirm="Are you sure you wish to delete this card?")= `Delete ${card.front}`

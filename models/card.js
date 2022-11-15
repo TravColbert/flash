@@ -20,37 +20,44 @@ module.exports = function (orm) {
       {
         front: 'Aardvark',
         back: 'A medium-sized, burrowing, nocturnal mammal native to Africa. It is the only living species of the order Tubulidentata, although other prehistoric species and genera of Tubulidentata are known. Unlike most other insectivores, it has a long pig-like snout, which is used to sniff out food.',
-        public: true
+        public: true,
+        tagId: 1
       },
       {
         front: 'Lion',
         back: 'A fierce animal.',
-        public: true
+        public: true,
+        tagId: 1
       },
       {
         front: 'Kitten',
         back: 'A lovable animal.',
-        public: true
+        public: true,
+        tagId: 1
       },
       {
         front: 'Snake',
         back: 'A tricky animal.',
-        public: true
+        public: true,
+        tagId: 1
       },
       {
         front: 'Pig',
         back: 'A yummy animal.',
-        public: true
+        public: true,
+        tagId: 1
       },
       {
         front: 'Eagle',
         back: 'A flying animal.',
-        public: true
+        public: true,
+        tagId: 1
       },
       {
         front: 'Shark',
         back: 'A vicious swimming animal.',
-        public: false
+        public: false,
+        tagId: 1
       }
     ]
   }

@@ -16,6 +16,11 @@ block content
             strong 
               a(href=`/cards/${card.id}` title=card.front) #{card.front}
           .back= card.back
+        .column.col-12 
+          .tags-list
+            - console.log(card)
+            each tag in card.tags
+              span.chip.tag= tag.name
   section.footer
     if user
       button.new.btn.btn-primary.btn-block(hx-get='/cards/new', title='new card', hx-target='body') Create new card

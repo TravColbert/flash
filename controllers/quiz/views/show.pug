@@ -20,8 +20,8 @@ block content
     .card-footer
       .navigation
         .btn-group
-          button.btn(hx-get=`/quizzes/${quiz.id}?step=${quiz.previous}&side=${quiz.side}`, hx-target='body', disabled=(quiz.step === 1))
+          button.btn(hx-get=`/quizzes/${quiz.id}?step=${quiz.previous}&side=${quiz.side}`, hx-target='body', hx-push-url="true", disabled=(quiz.step === 1))
             string &#8810;
-          button.btn.btn-success(hx-get=`/quizzes/${quiz.id}?step=${quiz.step}&side=${quiz.showSide === 'front' ? 'back' : 'front'}`, hx-target='body') Flip
-          button.btn(hx-get=`/quizzes/${quiz.id}?step=${quiz.next}&side=${quiz.side}`, hx-target='body', disabled=!(quiz.next))
+          a.btn.btn-success(href=`/quizzes/${quiz.id}?step=${quiz.step}&side=${quiz.showSide === 'front' ? 'back' : 'front'}`, hx-target='body', hx-push-url="true") Flip
+          button.btn(hx-get=`/quizzes/${quiz.id}?step=${quiz.next}&side=${quiz.side}`, hx-target='body', hx-push-url="true", disabled=!(quiz.next))
             strong &#8811

@@ -72,23 +72,22 @@ module.exports = function (db, authHelper) {
         })
     },
     list: (req, res, next) => {
-      const whereClause = {
+      const searchClause = {
         where: {
           public: true
-        }
+        },
+        order: [['front', 'ASC']],
+        include: db.models.tag
       }
       if (req.isAuthenticated()) {
-        whereClause.where = {
+        searchClause.where = {
           [Op.or]: [
             { owner: res.locals.user?.id },
             { public: true }
           ]
         }
       }
-
-      db.models.card.findAll(whereClause, {
-        order: [['front', 'ASC']]
-      })
+      db.models.card.findAll(searchClause)
         .then(cards => {
           res.render('list', { cards })
         })
