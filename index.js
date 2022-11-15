@@ -19,6 +19,9 @@ const app = (module.exports = express())
 // set our default template engine to "Pug"
 app.set('view engine', 'pug')
 
+// disable caching
+app.disable('etag')
+
 // set views for error and 404 pages
 app.set('views', path.join(__dirname, 'views'))
 
