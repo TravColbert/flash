@@ -138,6 +138,6 @@ app.use(function (req, res, next) {
 
 /* istanbul ignore next */
 if (!module.parent) {
-  app.listen(3000)
-  console.log('Express started on port 3000')
+  app.listen(process.env.SERVER_PORT)
+  console.log(`Express started on port ${process.env.SERVER_PORT}`)
 }
