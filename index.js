@@ -102,8 +102,6 @@ app.use(function (req, res, next) {
 app.use((req, res, next) => {
   res.locals.authenticated = req.isAuthenticated()
   res.locals.user = req.user
-  console.log(`\t*** User: ${JSON.stringify(res.locals.user)}`)
-  console.log(`\t*** Authenticated?: ${res.locals.authenticated}`)
   next()
 })
 
@@ -142,5 +140,4 @@ app.use(function (req, res, next) {
 if (!module.parent) {
   app.listen(3000)
   console.log('Express started on port 3000')
-  // console.log(app._router.stack)
 }

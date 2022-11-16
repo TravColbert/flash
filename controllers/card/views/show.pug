@@ -6,18 +6,20 @@ block variables
 
 block content
   h2 Card
-  section.item
-    .card-details
-      .front
-        h3 #{card.front}
-      .back #{card.back}
-  section.footer
-    .card-tags
-      if card.tags.length
-        legend Tags:
-        each tag in card.tags
-          span.chip.tag= tag.name
-    .controls
-      if user && user.id === card.owner
-        button.btn.btn-primary(hx-get=`/cards/${card.id}/edit`, hx-target='body')= `Edit ${card.front}`
-        button.btn.btn-error(hx-post=`/cards/${card.id}?_method=delete`, title='delete card', hx-target='body', hx-confirm="Are you sure you wish to delete this card?")= `Delete ${card.front}`
+  .card.card-item.item
+    .card-header
+    .card-body.card-item
+      .card-details
+        .card-front
+          h3 #{card.front}
+        .card-back #{card.back}
+    .card-footer
+      .card-tags
+        if card.tags.length
+          legend Tags:
+          each tag in card.tags
+            span.chip.tag= tag.name
+      .controls
+        if user && user.id === card.owner
+          button.btn.btn-primary(hx-get=`/cards/${card.id}/edit`, hx-target='body')= `Edit ${card.front}`
+          button.btn.btn-error(hx-post=`/cards/${card.id}?_method=delete`, title='delete card', hx-target='body', hx-confirm="Are you sure you wish to delete this card?")= `Delete ${card.front}`

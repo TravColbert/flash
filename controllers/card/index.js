@@ -6,13 +6,11 @@ module.exports = function (db, authHelper) {
   return {
     _authenticate: ['create', 'delete', 'edit', 'new', 'update'],
     before: (req, res, next) => {
-      console.log(req.body)
       next()
     },
     create: (req, res, next) => {
       const isPublic = ('public' in req.body.card)
       const createObj = { ...req.body.card, public: isPublic, owner: res.locals.user.id }
-      console.log(createObj)
       db.models.card.create(createObj)
         .then(async (card) => {
           const tags = req.body.card.tags !== undefined ? req.body.card.tags : null

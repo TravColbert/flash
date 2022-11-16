@@ -10,7 +10,6 @@ module.exports = (db) => {
     for (let i = 0; i < length; i++) {
       sequence.push(i)
     }
-    console.log(sequence)
     return shuffle(sequence)
   }
 
@@ -97,11 +96,8 @@ module.exports = (db) => {
       // params:
       //   step: index of the current point in the sequence
       //   side: front | back
-      // console.log(req.params)
-      // console.log(req.query)
       const step = parseInt(req.query.step) || 1
       const actualStep = (step - 1)
-      console.log(actualStep)
       const showSide = req.query.side || 'front'
       db.models.quiz.findByPk(req.params.quizId, { include: db.models.tag })
         .then(async quiz => {
@@ -124,7 +120,6 @@ module.exports = (db) => {
             : ['front', 'back'][Math.floor(Math.random() * 2)]
           quiz.next = sequence.length > step ? (step + 1) : false
           quiz.previous = (step === 1 || !step) ? 1 : (step - 1)
-          // console.log(quiz)
           res.render('show', { quiz, card })
         })
         .catch(err => {

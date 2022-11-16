@@ -3,13 +3,11 @@
 const { Op } = require('sequelize')
 
 module.exports = function (db) {
-  console.log(`\ttag index: ***${__dirname}***`)
   return {
     _authenticate: ['create', 'delete', 'list', 'new'],
-    before: (req, res, next) => {
-      console.log('executing before()...')
-      next()
-    },
+    // before: (req, res, next) => {
+    //   next()
+    // },
     create: (req, res, next) => {
       if (!req.body.tag.name || req.body.tag.name === '') {
         req.session.messages.push({
