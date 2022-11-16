@@ -62,7 +62,7 @@ passport.use('oidc', new Strategy({
   userInfoURL: `https://${process.env.OKTA_DOMAIN}/oauth2/default/v1/userinfo`,
   clientID: process.env.OKTA_OAUTH2_CLIENT_ID,
   clientSecret: process.env.OKTA_OAUTH2_CLIENT_SECRET,
-  callbackURL: `http://${process.env.HOST_URL}/callback`,
+  callbackURL: `${process.env.HOST_URL}/callback`,
   scope: 'openid profile'
 }, (issuer, profile, done) => {
   return done(null, profile)
