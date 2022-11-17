@@ -1,0 +1,7 @@
+{
+  "db": {
+    "dialect": "sqlite",
+    "verbose": true,
+    "dbConfig": "sqlite::memory"
+  }
+}

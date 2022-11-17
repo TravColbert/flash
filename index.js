@@ -1,6 +1,6 @@
 'use strict'
 
-require('dotenv').config()
+const config = require('config')
 
 /**
  * Module dependencies.
@@ -105,21 +105,8 @@ app.use((req, res, next) => {
   next()
 })
 
-// load models
-// Optional DB config:
-// {
-//   dialect: 'sqlite',
-//   storage: 'db/database.sqlite'
-// }
-const db = require('./lib/boot-models')({
-  verbose: true,
-  dbConfig: 'sqlite::memory'
-})
-
-// app.use((req, res, next) => {
-//   verbose && console.log('=> %s %s %s', req.method, req.url, req.params)
-//   next()
-// })
+const dbConfig = config.get('db')
+const db = require('./lib/boot-models')(dbConfig)
 
 require('./lib/boot-controllers')(app, { db, verbose: !module.parent, auth: passport })
 
@@ -139,5 +126,5 @@ app.use(function (req, res, next) {
 /* istanbul ignore next */
 if (!module.parent) {
   app.listen(process.env.SERVER_PORT)
-  console.log(`Express started on port ${process.env.SERVER_PORT}`)
+  console.log(`App started on port ${process.env.SERVER_PORT}`)
 }
