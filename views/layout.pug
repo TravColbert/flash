@@ -19,7 +19,7 @@ html(lang='en', data-theme='light')
     script(src='https://unpkg.com/htmx.org@1.8.2')
     title Flashcards #{title}
   body
-    header.navbar
+    header.navbar.semi-transparent
       section.navbar-section
         a.page-title.navbar-brand.text-bold.mr-2(href="/", title="Flashcards Home") Flashcards #{(title) ? "- " + title : ""}
       section.navbar-section
@@ -36,5 +36,4 @@ html(lang='en', data-theme='light')
       +messages(messages)
       block content
 
-    hr.bottom
-    footer Built with #[a(href='https://expressjs.com/') Express.js], login powered by #[a(href='https://developer.okta.com/') Okta].
+    footer.semi-transparent Built with #[a(href='https://expressjs.com/') Express.js], login powered by #[a(href='https://developer.okta.com/') Okta].

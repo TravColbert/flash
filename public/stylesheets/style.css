@@ -10,9 +10,12 @@ a:hover {
     text-decoration: underline;
 }
 
-.navbar {
+.semi-transparent {
     backdrop-filter: blur(5px);
     background: rgba(247,248,249,.65);
+}
+
+.navbar {
     height: 3.8rem;
     position: fixed;
     right: 0;
@@ -23,6 +26,15 @@ a:hover {
 
 body > main {
     margin-top: 3.8rem;
+}
+
+body > footer {
+    border-top: 1px solid #999;
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    width: 100%;
+    z-index: 100;
 }
 
 .list > .item {

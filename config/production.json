@@ -1,6 +1,6 @@
 {
   "db": {
     "dialect": "sqlite",
-    "storage": "db/database.sqlite"
+    "storage": "db/app.sqlite"
   }
 }
