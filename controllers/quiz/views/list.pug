@@ -6,8 +6,12 @@ block variables
 
 block content
   h2 Quizzes
-  section.header. 
-    (#{quizzes.length} #{(quizzes.length !== 1) ? 'quizzes' : 'quiz'})
+  section.header.columns
+    .column.col-10.col-sm-12 
+      span (#{quizzes.length} #{(quizzes.length !== 1) ? 'quizzes' : 'quiz'})
+    .column.col-2.col-sm-12
+      if user
+        button.new.btn.btn-link.float-right(hx-get="/quizzes/new", title="new quiz", hx-push-url="true", hx-target='body') Create new quiz
   section.quizzes.list.container
     each quiz in quizzes
       .item.columns

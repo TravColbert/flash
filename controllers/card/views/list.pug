@@ -6,8 +6,12 @@ block variables
 
 block content
   h2 Cards 
-  section.header.
-    (#{cards.length} #{(cards.length !== 1) ? 'cards' : 'card'})
+  section.header.columns
+    .column.col-10.col-sm-12 
+      span (#{cards.length} #{(cards.length !== 1) ? 'cards' : 'card'})
+    .column.col-2.col-sm-12
+      if user
+        button.new.btn.btn-link.float-right(hx-get='/cards/new', title='new card', hx-target='body') Create new card
   section.cards.list.container
     each card in cards
       .item.columns
