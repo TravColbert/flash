@@ -9,6 +9,7 @@ const express = require('express')
 const logger = require('morgan')
 const path = require('path')
 const session = require('express-session')
+const MemoryStore = require('memorystore')(session)
 const methodOverride = require('method-override')
 
 const passport = require('passport')
@@ -45,9 +46,13 @@ app.use(express.static(path.join(__dirname, 'public')))
 // session support
 app.use(
   session({
-    resave: false, // don't save session if unmodified
-    saveUninitialized: false, // don't create session until something stored
-    secret: process.env.APP_SECRET
+    cookie: { maxAge: 86400000 },
+    store: new MemoryStore({
+      checkPeriod: 86400000 // prune expired entries every 24h
+    }),
+    resave: false,
+    secret: process.env.APP_SECRET,
+    saveUninitialized: false // don't create session until something stored
   })
 )
 
