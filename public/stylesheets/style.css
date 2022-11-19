@@ -24,8 +24,9 @@ a:hover {
     z-index: 100;
 }
 
-body > main {
+body > main.container {
     margin-top: 3.8rem;
+    margin-bottom: 1.5rem;
 }
 
 body > footer {
