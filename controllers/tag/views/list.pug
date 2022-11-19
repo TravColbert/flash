@@ -6,8 +6,12 @@ block variables
 
 block content
   h2 Tags
-  section.header.
-    (#{tags.length} #{(tags.length !== 1) ? 'tags' : 'tag'})
+  section.header.columns
+    .column.col-10.col-sm-12 
+      span (#{tags.length} #{(tags.length !== 1) ? 'tags' : 'tag'})
+    .column.col-2.col-sm-12
+      if user
+        button.new.btn.btn-link.float-right(hx-get="/tags/new", title="new tag", hx-push-url="true", hx-target='body') Create new tag
   section.tags.list.container
     each tag in tags
       .item.columns
