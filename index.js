@@ -112,9 +112,9 @@ app.use((req, res, next) => {
 
 const dbConfig = ('DB_CONFIG' in process.env) ? process.env.DB_CONFIG : config.get('db')
 
-const db = require('./lib/boot-models')(dbConfig)
+const db = require('./lib/boot_models')(dbConfig)
 
-require('./lib/boot-controllers')(app, { db, verbose: !module.parent, auth: passport })
+require('./lib/boot_controllers')(app, { db, verbose: !module.parent, auth: passport })
 
 app.use(function (err, req, res, next) {
   // log it
