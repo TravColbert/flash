@@ -3,9 +3,14 @@
 const { Op } = require('sequelize')
 
 module.exports = function (db, authHelper) {
+  const formatTemplateName = (res, baseTemplate) => {
+    return (res.locals.templateModifier) ? `${baseTemplate}_${res.locals.templateModifier}` : baseTemplate
+  }
+
   return {
     _authenticate: ['create', 'delete', 'edit', 'new', 'update'],
     before: (req, res, next) => {
+      res.locals.templateModifier = ('_format' in req.query) ? req.query._format : false
       next()
     },
     create: (req, res, next) => {
@@ -87,7 +92,7 @@ module.exports = function (db, authHelper) {
       }
       db.models.card.findAll(searchClause)
         .then(cards => {
-          res.render('list', { cards })
+          res.render(formatTemplateName(res, 'list'), { cards })
         })
     },
     new: async (req, res, next) => {
@@ -97,7 +102,7 @@ module.exports = function (db, authHelper) {
     show: (req, res, next) => {
       db.models.card.findByPk(req.params.cardId, { include: db.models.tag })
         .then(card => {
-          res.render('show', { card })
+          res.render(formatTemplateName(res, 'show'), { card })
         })
         .catch((err) => {
           console.log(err)
