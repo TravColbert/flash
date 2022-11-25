@@ -1,0 +1,11 @@
+each card in cards
+  .item.columns
+    .column.col-12
+      .front
+        strong 
+          a(href=`/cards/${card.id}` title=card.front) #{card.front}
+      .back= card.back
+    .column.col-12 
+      .tags-list
+        each tag in card.tags
+          span.chip.tag= tag.name

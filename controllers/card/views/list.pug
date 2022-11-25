@@ -13,17 +13,7 @@ block content
       if user
         button.new.btn.btn-link.float-right(hx-get='/cards/new', title='new card', hx-target='body') Create new card
   section.cards.list.container
-    each card in cards
-      .item.columns
-        .column.col-12
-          .front
-            strong 
-              a(href=`/cards/${card.id}` title=card.front) #{card.front}
-          .back= card.back
-        .column.col-12 
-          .tags-list
-            each tag in card.tags
-              span.chip.tag= tag.name
+    include _list_list
   section.footer
     if user
       button.new.btn.btn-primary.btn-block(hx-get='/cards/new', title='new card', hx-target='body') Create new card
