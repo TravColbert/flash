@@ -15,26 +15,11 @@ html(lang='en')
     script(src='https://unpkg.com/htmx.org@1.8.2')
     title Flashcards #{title}
   body
-    header.navbar.semi-transparent
-      section.navbar-section
-        a.page-title.navbar-brand.text-bold.mr-2(href="/", title="Flashcards Home") Flashcards #{(title) ? "- " + title : ""}
-      section.navbar-section
-        if authenticated
-          a.btn.btn-link(href="/tags") Tags
-        a.btn.btn-link(href="/cards") Cards
-        a.btn.btn-link(href="/quizzes") Quizzes
-        if authenticated
-          a.btn.btn-link(href="/profile") Profile: #{user.displayName}
-          a.btn.btn-link(hx-post="/logout", hx-target='body') Logout
-        if !authenticated
-          a.btn.btn-link(href="/login") Log In
+    header.navbar.semi-transparent.p-fixed
+      include _navigation
     main.container.grid-lg
       +messages(messages)
       block content
 
-    footer.semi-transparent.columns 
-      .colum.col-6 Built in Long Beach, California
-      .colum.col-6
-        .float-right
-          a(href="mailto:travis@traviscolbert.net") travis@traviscolbert.net
-          span &copy;2022
+    footer.navbar.semi-transparent.p-fixed
+      include _navigation_footer

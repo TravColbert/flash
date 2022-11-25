@@ -1,0 +1,12 @@
+section.navbar-section
+  a.page-title.navbar-brand.text-bold.mr-2(href="/", title="Flashcards Home") Flashcards #{(title) ? "- " + title : ""}
+section.navbar-section
+  if authenticated
+    a.btn.btn-link(href="/tags") Tags
+  a.btn.btn-link(href="/cards") Cards
+  a.btn.btn-link(href="/quizzes") Quizzes
+  if authenticated
+    a.btn.btn-link(href="/profile") Profile: #{user.displayName}
+    a.btn.btn-link(hx-post="/logout", hx-target='body') Logout
+  if !authenticated
+    a.btn.btn-link(href="/login") Log In

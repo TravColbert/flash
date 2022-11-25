@@ -15,13 +15,30 @@ a:hover {
     background: rgba(247,248,249,.65);
 }
 
-.navbar {
-    height: 3.8rem;
-    position: fixed;
-    right: 0;
-    top: 0;
-    width: 100%;
+body > header, body > footer {
     z-index: 100;
+}
+
+body > header {
+    top: 0;
+    left: 0;
+}
+
+body > footer {
+    bottom: 0;
+    left: 0;
+}
+
+.navbar {
+    width: 100%;
+}
+
+header > .navbar {
+    height: 3.8rem;
+}
+
+footer > .navbar {
+    height: 1.8rem;
 }
 
 body > main.container {
@@ -41,7 +58,6 @@ body > footer {
 .list > .item {
     align-items: center;
     background-color: #fff;
-    /* box-shadow: 0 1px 2px #ddd; */
     border-radius: 3px;
     border: 0.5px solid #eee;
     display: flex;
