@@ -1,0 +1,11 @@
+if todos.length
+  .controls.columns 
+    .col-4
+      if todos.length 
+        span `${todos.length} ${todos.length === 1 ? 'item' : 'items'} left`  
+    .col-4.btn-group.btn-group-block
+      button.btn All
+      button.btn Active
+      button.btn Completed
+    .col-4
+      button.btn Clear completed

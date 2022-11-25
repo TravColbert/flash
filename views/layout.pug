@@ -13,11 +13,12 @@ html(lang='en')
     link(rel="stylesheet", href='https://unpkg.com/spectre.css/dist/spectre.min.css')
     link(rel="stylesheet", href='/stylesheets/style.css')
     script(src='https://unpkg.com/htmx.org@1.8.2')
-    title Flashcards #{title}
+    title Flash TodoMVC #{title}
   body
     header.navbar.semi-transparent.p-fixed
       include _navigation_header
     main.container.grid-lg
+      h1 Todos
       +messages(messages)
       block content
 

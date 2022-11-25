@@ -1,0 +1,14 @@
+if todos.length
+  table.table 
+    tbody
+      each todo in todos 
+        tr 
+          td
+            label.form-checkbox
+              input(type='checkbox', name='complete', checked=false)
+          td
+            if todo.completed
+              s= todo.title
+            else 
+              span= todo.title
+    

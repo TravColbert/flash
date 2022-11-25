@@ -1,0 +1,12 @@
+extends ../../../views/layout
+
+block variables
+  - var selected = "todos";
+  - var title = "Todos";
+
+block content
+  .card
+    include _new
+    #todos-list
+      include _list_table
+    include _controls
