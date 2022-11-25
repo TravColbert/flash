@@ -1,10 +1,10 @@
-.card.item.columns
-  .column.col-12
-    .front
-      strong 
-        a(href=`/cards/${card.id}` title=card.front) #{card.front}
-    .back= card.back
-  .column.col-12 
-    .tags-list
+.card
+  .card-header.front
+    a.text-bold(href=`/cards/${card.id}` title=card.front) #{card.front}
+  .card-body.back= card.back
+  .card-footer.meta.text-tiny.columns 
+    .tags-list.col-6
       each tag in card.tags
         span.chip.tag= tag.name
+    .create-date.col-6.text-muted.text-right
+      +localeDateSpan(card.createdAt)
