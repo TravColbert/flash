@@ -2,14 +2,10 @@ block variables
   - var selected = 'Home';
   - var title = 'Home';
 
-mixin messages(messages)
-  if messages && messages.length
-    .messages
-      each message in messages 
-        .toast.message(class=`toast-${message.type}`)= message.text
+include mixins
 
 doctype html
-html(lang='en', data-theme='light')
+html(lang='en')
   head
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')

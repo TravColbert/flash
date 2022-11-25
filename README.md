@@ -52,6 +52,8 @@ For example:
 docker run -it --env-file .env -p 3000:3000 --name flash-test-app flash-test
 ```
 
+You might find that adding the **--rm** argument prevents Docker complaints.
+ 
 Above, we call the container **flash-test-app**. This has a writable filesystem such that your database entries will persist between restarts of your container.
 #### Restarting a container
 

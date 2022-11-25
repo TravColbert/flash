@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "dev": "nodemon index.js",
     "test": "jest",
-    "with-seed": "export SEED_DB=true; node index.js"
+    "with-seed": "export SEED_DB=true; node index.js",
+    "dev-with-seed": "export SEED_DB=true; nodemon index.js"
   },
   "author": "",
   "license": "ISC",
