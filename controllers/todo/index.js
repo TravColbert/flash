@@ -15,7 +15,8 @@ module.exports = function (db, authHelper) {
       next()
     },
     create: (req, res, next) => {
-      const createObj = { ...req.body.card, owner: res.locals.user.id }
+      const createObj = { ...req.body[model] }
+      console.log(createObj)
       db.models[model].create(createObj)
         .then(() => {
           req.session.messages.push({
@@ -31,7 +32,7 @@ module.exports = function (db, authHelper) {
           })
         })
         .finally(() => {
-          res.redirect(modelPath)
+          res.redirect(`${modelPath}?_format=block`)
         })
     },
     delete: (req, res, next) => {
@@ -52,7 +53,7 @@ module.exports = function (db, authHelper) {
           })
         })
         .finally(() => {
-          res.redirect(modelPath)
+          res.redirect(`${modelPath}?_format=block`)
         })
     },
     edit: (req, res, next) => {

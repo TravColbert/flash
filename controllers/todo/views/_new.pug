@@ -4,4 +4,4 @@
       button.btn.btn-action
         i.icon.icon-arrow-left
   .column.col-11
-    input.form-input.input-lg(type='text' placeholder='What needs to be done?' hx-post='/todos?_format=table' hx-target='#todos-list')
+    input.form-input.input-lg(type='text' placeholder='What needs to be done?' name="todo[title]" hx-post='/todos?_format=table' hx-target='#todos-list')

@@ -1,0 +1,15 @@
+if todos.length
+  each todo in todos
+    .container
+      .columns 
+        .column.col-1 
+          label.form-checkbox
+            input(type='checkbox', name='complete', checked=false)
+        .column.col-10.h4
+          if todo.completed 
+            s= todo.title
+          else 
+            span= todo.title 
+        .column.col-1 
+          a(hx-post=`/todos/${todo.id}?_method=delete&_format=block` hx-target='#todos-list') x
+  include _controls

@@ -5,8 +5,8 @@ block variables
   - var title = "Todos";
 
 block content
-  .card
-    include _new
+  #todo-list-container.card.shadowed
+    .container
+      include _new
     #todos-list
-      include _list_table
-    include _controls
+      include _list_block
