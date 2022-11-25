@@ -9,16 +9,8 @@ block content
   .card.card-item.item
     .card-header
     .card-body.card-item
-      .card-details
-        .card-front
-          h3 #{card.front}
-        .card-back #{card.back}
+      include _show_card
     .card-footer
-      .card-tags
-        if card.tags.length
-          legend Tags:
-          each tag in card.tags
-            span.chip.tag= tag.name
       .controls
         if user && user.id === card.owner
           button.btn.btn-primary(hx-get=`/cards/${card.id}/edit`, hx-target='body')= `Edit ${card.front}`

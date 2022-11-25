@@ -13,7 +13,8 @@ block content
       if user
         button.new.btn.btn-link.float-right(hx-get='/cards/new', title='new card', hx-target='body') Create new card
   section.cards.list.container
-    include _list_list
+    include _list_card
+    include _list_table
   section.footer
     if user
       button.new.btn.btn-primary.btn-block(hx-get='/cards/new', title='new card', hx-target='body') Create new card

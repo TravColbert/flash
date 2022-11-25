@@ -1,0 +1,19 @@
+table.table.table-striped.table-hover
+  thead 
+    tr
+      th Front
+      th Tags
+      th Create date
+  tbody
+    each card in cards
+      tr 
+        td
+          a(hx-get=`/cards/${card.id}` title='Get card' hx-target='body' hx-push-url='true')= card.front
+        td 
+          each tag in card.tags
+            span.chip.tag= tag.name
+        td
+          +localeDateSpan(card.createdAt)
+  tfoot
+  
+  

@@ -8,6 +8,11 @@ mixin messages(messages)
       each message in messages 
         .toast.message(class=`toast-${message.type}`)= message.text
 
+mixin localeDateSpan(dateString)
+  - const d = new Date(Date.parse(dateString))
+  - const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  span= d.toLocaleDateString(undefined, options)
+
 doctype html
 html(lang='en', data-theme='light')
   head
