@@ -15,8 +15,8 @@ module.exports = function (db, authHelper) {
       next()
     },
     create: (req, res, next) => {
-      const createObj = { ...req.body[model] }
-      console.log(createObj)
+      const completed = req.body[model]?.completed || false
+      const createObj = { ...req.body[model], completed }
       db.models[model].create(createObj)
         .then(() => {
           req.session.messages.push({
@@ -73,15 +73,19 @@ module.exports = function (db, authHelper) {
       const searchClause = {
         order: [['createdAt', 'DESC']]
       }
+      const filter = ('filter' in req.query) ? req.query.filter : 'all'
       db.models[model].findAll(searchClause)
         .then(todos => {
-          return res.render(formatTemplateName(res, 'list'), { todos })
+          return res.render(formatTemplateName(res, 'list'), { todos, filter })
         })
     },
     update: (req, res, next) => {
-      db.models[model].findByPk(req.body[model].id)
+      const modelUpdate = req.body[model] || {}
+      db.models[model].findByPk(req.params[modelId])
         .then(async (model) => {
-          await model.update(req.body[model])
+          model.completed = ('completed' in modelUpdate)
+          model.title = ('title' in modelUpdate) ? modelUpdate.title : model.title
+          await model.save()
           req.session.messages.push({
             type: 'success',
             text: 'Todo updated'
@@ -95,7 +99,7 @@ module.exports = function (db, authHelper) {
           })
         })
         .finally(() => {
-          res.redirect(`${modelPath}/${req.body[model].id}`)
+          res.redirect(`${modelPath}?_format=block`)
         })
     }
   }

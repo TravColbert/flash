@@ -11,6 +11,7 @@ html(lang='en')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
     meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
     link(rel="stylesheet", href='https://unpkg.com/spectre.css/dist/spectre.min.css')
+    link(rel="stylesheet", href='https://unpkg.com/spectre.css/dist/spectre-icons.css')
     link(rel="stylesheet", href='/stylesheets/style.css')
     script(src='https://unpkg.com/htmx.org@1.8.2')
     title Flash TodoMVC #{title}
@@ -18,9 +19,9 @@ html(lang='en')
     header.navbar.semi-transparent.p-fixed
       include _navigation_header
     main.container.grid-sm
-      h1 Todos
+      #app-title.text-center
+        Todos
       +messages(messages)
       block content
-
     footer.navbar.semi-transparent.p-fixed
       include _navigation_footer

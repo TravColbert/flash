@@ -5,6 +5,7 @@ module.exports = function (orm) {
       title: orm.TEXT,
       completed: {
         type: orm.BOOLEAN,
+        allowNull: false,
         default: false
       },
       owner: {

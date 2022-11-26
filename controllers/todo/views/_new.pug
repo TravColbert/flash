@@ -1,7 +1,7 @@
 .columns
   .column.col-1
     if todos.length
-      button.btn.btn-action
-        i.icon.icon-arrow-left
+      button.btn.btn-link
+        i.icon.icon-arrow-down
   .column.col-11
-    input.form-input.input-lg(type='text' placeholder='What needs to be done?' name="todo[title]" hx-post='/todos?_format=table' hx-target='#todos-list')
+    input.strong.form-input.input-lg.no-border(type='text' placeholder='What needs to be done?' name="todo[title]" hx-post='/todos?_format=table' hx-target='#todos-list' autofocus)

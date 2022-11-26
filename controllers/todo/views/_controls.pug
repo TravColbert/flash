@@ -1,12 +1,12 @@
 if todos.length
-  .container
-    .controls.columns 
+  #controls.container
+    .columns 
       .column.col-4.text-center
-        if todos.length 
-          span= `${todos.length} ${todos.length === 1 ? 'item' : 'items'} left`  
+        - let completedTodos = todos.filter(todo => todo.completed != true).length 
+        span= `${completedTodos} ${completedTodos === 1 ? 'item' : 'items'} left`  
       .column.col-4.btn-group.btn-group-block
-        button.btn.btn-link All
-        button.btn.btn-link Active
-        button.btn.btn-link Completed
+        button.btn.btn-link(hx-get=`/todos?_format=block&filter=all`, hx-target='#todos-list') All
+        button.btn.btn-link(hx-get=`/todos?_format=block&filter=active`, hx-target='#todos-list') Active
+        button.btn.btn-link(hx-get=`/todos?_format=block&filter=completed`, hx-target='#todos-list') Completed
       .column.col-4
         button.btn.btn-link.p-centered Clear completed
