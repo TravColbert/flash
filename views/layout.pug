@@ -1,6 +1,6 @@
 block variables
   - var selected = 'Home';
-  - var title = 'Home';
+  - var title = 'Todos';
 
 include mixins
 
@@ -15,12 +15,11 @@ html(lang='en')
     link(rel="stylesheet", href='/stylesheets/style.css')
     script(src='https://unpkg.com/htmx.org@1.8.2')
     title Flash TodoMVC #{title}
-  body
+  body.flex-centered
     header.navbar.semi-transparent.p-fixed
       include _navigation_header
     main.container.grid-sm
-      #app-title.text-center
-        Todos
+      #app-title.text-center= title
       +messages(messages)
       block content
     footer.navbar.semi-transparent.p-fixed
