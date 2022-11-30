@@ -1,5 +1,31 @@
 # Flash 
 
+## Configuring
+
+There are 3 ways to configure your app:
+
+ 1. .env file
+ 1. config.file
+ 1. container/cloud environment
+
+### .env file
+
+**.env** files are intended to be used for local development. They are gitignored to prevent them from being included in your Git repo.
+
+**dotenv** is used to parse the **.env** files and include them into node's **process.env** object.
+
+### config.file
+
+The NPM **config** package is also used to support config files. name your config files **development** or **production** so the right oen is used depending on your app's stage of development. 
+
+The **config/** folder is *not* protected by gitignore to be careful about what you put in these files. 
+
+Config files overwrite environment variables set either through a local .env file or your cloud environment. 
+
+### Container or cloud environment variables
+
+The best way to configure your app is to use your cloud provider's environment.
+
 ## Developing Locally
 
 The easiest way to get started developing your app locally is:
